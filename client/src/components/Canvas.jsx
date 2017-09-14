@@ -30,6 +30,9 @@ class Canvas extends Component {
 					<img onLoad={this.getDimensions} src={src} />
 					<canvas width={this.state.width} height={this.state.height} />
 				</div>
+				<div id='tools'>
+					<button onClick={this.props.discard}>Discard</button>
+				</div>
 			</div>
 
 		)

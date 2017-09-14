@@ -56,11 +56,8 @@ header {
 }
 
 #sketch-container {
-  background-color: pink;
-  border: 2px solid red;
   position: relative;
-  width: 50vw;
-  height: 100%;
+  width: 60vw;
   left: 50px;
 }
 
@@ -76,7 +73,6 @@ canvas {
   position: absolute;
   left: 0;
   z-index: 5;
-  border: 2px solid lime;
   width: 100%;
 }
 

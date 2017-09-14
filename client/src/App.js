@@ -19,6 +19,7 @@ class App extends Component {
       selected: false,
     }
     this.selectArtwork = this.selectArtwork.bind(this);
+    this.discard = this.discard.bind(this);
   }
 
   //set artwork to be sketched over
@@ -30,12 +31,20 @@ class App extends Component {
     })
   }
 
+  discard() {
+    this.setState({
+      currentArtwork: null,
+      selected: false,
+    });
+  }
+
   render() {
     return (
       <Router>
         <div className="App">
         <Nav />
-        {this.state.selected ? <Canvas artwork={this.state.currentArtwork} /> : <Artists selectArtwork={this.selectArtwork}/>}
+        {this.state.selected ? <Canvas artwork={this.state.currentArtwork} discard={this.discard}/> 
+        : <Artists selectArtwork={this.selectArtwork}/>}
         </div>
       </Router>
     );
