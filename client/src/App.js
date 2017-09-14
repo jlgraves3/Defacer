@@ -20,6 +20,7 @@ class App extends Component {
     }
     this.selectArtwork = this.selectArtwork.bind(this);
     this.discard = this.discard.bind(this);
+    this.resetCanvas = this.resetCanvas.bind(this);
   }
 
   //set artwork to be sketched over
@@ -38,13 +39,27 @@ class App extends Component {
     });
   }
 
+  resetCanvas(artwork) {
+    this.discard();
+    this.selectArtwork(artwork);
+    let canvas = document.getElementsByClassName('canvas');
+    let parent = document.getElementById('sketch-container');
+    parent.removeChild(canvas);
+    console.log(canvas)
+  }
+
   render() {
     return (
       <Router>
         <div className="App">
         <Nav />
-        {this.state.selected ? <Canvas artwork={this.state.currentArtwork} discard={this.discard}/> 
-        : <Artists selectArtwork={this.selectArtwork}/>}
+        {this.state.selected ? 
+          <Canvas 
+              artwork={this.state.currentArtwork} 
+              resetCanvas={this.resetCanvas}
+              discard={this.discard} /> 
+        : <Artists 
+              selectArtwork={this.selectArtwork} />}
         </div>
       </Router>
     );

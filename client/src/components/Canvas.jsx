@@ -15,9 +15,14 @@ class Canvas extends Component {
 		this.state = {
 			height: 0,
 			width: 0,
-			dimensionsLoaded: false, 
+			dimensionsLoaded: false,
+			size: 5,
+			color: 'red',
+			fill: '',
+			tool: TOOL_PENCIL,
 		}
 		this.getDimensions = this.getDimensions.bind(this);
+		this.tools = this.tools.bind(this);
 	}
 	/* used https://stackoverflow.com/questions/39092859/get-dimensions-of-image-with-react
 	 thread answer to help */
@@ -30,25 +35,41 @@ class Canvas extends Component {
 		});
 	}	
 
+	tools() {
+		return(
+			<div className='tools'>
+				<button onClick={this.props.discard}>Discard</button>
+				<button onClick={() => this.forceUpdate()}>Reset</button>
+				<div>
+					<label>color:</label>
+					<input 
+						type='color' 
+						value={this.state.color} 
+						onChange={(e) => this.setState({
+							color: e.target.value,
+						})} />
+				</div>
+			</div>
+		)
+	}
+
 	render() {
 		const src= this.props.artwork._links.image.href.replace("{image_version}","large");
-		//const {width} = this.state.width;
-		//const {height} = this.state.height; 
-		//<canvas id='sketchpad' width={this.state.width} height={this.state.height} />
-
 		return(
 			<div>
 				<h2>{this.props.artwork.title}</h2>
 				<div id='sketch-container' width={this.state.width} height={this.state.height}>
 					<img onLoad={this.getDimensions} src={src} />
 					{this.state.dimensionsLoaded ? 
-						<SketchPad width={this.state.width} height={this.state.height} />
+						<SketchPad 
+								width={this.state.width} 
+								height={this.state.height} 
+								color={this.state.color}
+								size={this.state.size}
+								items={[]} />
 						: ''}
-					
-				</div>
-				<div id='tools'>
-					<button onClick={this.props.discard}>Discard</button>
-				</div>
+					</div>
+				{this.tools()}
 			</div>
 
 		)
