@@ -13,10 +13,11 @@ class Works extends Component {
 
 	componentWillMount() {
 		console.log('will mount',this.props);
-		const parsedName = this.props.artist.name.split(' ').join('-').replace("'","").toLowerCase();
-		console.log(`/artists/${parsedName}/works`)
-		axios.get(`/artists/${parsedName}/works`)
+		//const parsedName = this.props.artist.name.split(' ').join('-').replace("'","").toLowerCase();
+		console.log(`/artists/${this.props.artist.path}/works`)
+		axios.get(`/artists/${this.props.artist.path}/works`)
 		.then(res => {
+			console.log(res.data);
 			this.setState({
 				artworks: res.data.data,
 				artworksLoaded: true,
@@ -25,9 +26,8 @@ class Works extends Component {
 	}
 
 	renderArtwork(artwork) {
-		console.log(artwork)
 		return (
-			<div key={artwork.id}>
+			<div key={artwork.id} className='artwork' onClick={() => this.props.selectArtwork(artwork)}>
 				<img src={artwork._links.image.href.replace("{image_version}","medium")} />
 				<h3>{artwork.title}</h3>
 			</div>
@@ -37,9 +37,10 @@ class Works extends Component {
 	render() {
 		return (
 			<div>
-			<h1>{this.props.artist.name} 
-				 <span id='x' onClick={() => this.props.toggleArtist(this.props.artist)}> × </span> 
-			</h1>
+				<header>
+					<h1>{this.props.artist.name}</h1>
+					<h1 id='x' onClick={() => this.props.toggleArtist(this.props.artist)}> × </h1> 
+				</header>
 				<div className='container'>
 					{this.state.artworksLoaded ? 
 						this.state.artworks.map(this.renderArtwork) : ''}

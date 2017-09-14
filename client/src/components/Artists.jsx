@@ -15,6 +15,12 @@ class Artists extends Component {
 				'michelangel-buonarroti',
 				'leonardo-da-vinci',
 				'vincent-van-gogh',
+				'keith-haring',
+				'hieronymus-bosch',
+				'albrecht-durer',
+				'francisco-de-goya',
+				'edgar-degas',
+				'edvard-munch',
 			],
 			artistData: [],
 			artistDataLoaded: false,
@@ -31,7 +37,9 @@ class Artists extends Component {
 		this.state.artists.forEach(artist => {
 			axios.get(`/artists/${artist}`)
 			.then(res => {
-				artistData.push(res.data.data);
+				const data = res.data.data;
+				data.path = artist
+				artistData.push(data);
 				this.setState({
 						artistData: artistData,
 						artistDataLoaded: true,
@@ -54,7 +62,7 @@ class Artists extends Component {
 
 	renderArtist(artist) {
 		return(
-			<div key={artist.id} onClick={() => this.toggleArtist(artist)}>
+			<div key={artist.id} className="artist" onClick={() => this.toggleArtist(artist)}>
 				<img className='thumbnail' src={artist._links.thumbnail.href} />
 				<h3>{artist.name}</h3>
 			</div>
@@ -65,7 +73,8 @@ class Artists extends Component {
 		console.log('helper')
 		if (this.state.selectedArtist) {
 			console.log('IS SELECTED')
-			return 	<Works artist={this.state.selectedArtist} toggleArtist={this.toggleArtist} /> 
+			return 	<Works artist={this.state.selectedArtist} toggleArtist={this.toggleArtist} 
+			selectArtwork={this.props.selectArtwork} /> 
 		} else {
 			console.log('NONE IS SELECTED')
 			return (

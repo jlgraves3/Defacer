@@ -33,7 +33,7 @@ class App extends Component {
       <Router>
         <div className="App">
         <Nav />
-        <Artists />
+        <Artists selectArtwork={this.selectArtwork}/>
         </div>
       </Router>
     );

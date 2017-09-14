@@ -3,14 +3,49 @@ nav {
   height: 40px;
 }
 
+h3 {
+  font-size: 16px;
+}
+
 .thumbnail {
   width: 200px;
 }
 
-.container {
-  margin: 50px;
+#x {
+  font-weight: lighter;
+  font-size: 56px;
+  text-align: right;
+}
+
+header {
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 30px;
+}
+
+.container {
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: space-between;
+}
+
+.artwork, .artist {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+.artist {
+  width: 20vw;
+}
+
+.artwork {
+  width: 25vw;
+}
+.artwork img {
+  width: 100%;
 }
