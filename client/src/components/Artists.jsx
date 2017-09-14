@@ -14,15 +14,11 @@ class Artists extends Component {
 				'pablo-picasso',
 				'michelangel-buonarroti',
 				'leonardo-da-vinci',
-				'salvador-dali',
 				'vincent-van-gogh',
-				'henri-matisse',
-				'georgia-okeeffe',
-				'frida-kahlo'
 			],
 			artistData: [],
 			artistDataLoaded: false,
-			selectedArtist: null,
+			selectedArtistId: null,
 		}
 		this.renderArtist = this.renderArtist.bind(this);
 		this.toggleArtist = this.toggleArtist.bind(this);
@@ -46,13 +42,13 @@ class Artists extends Component {
 	}
 
 	toggleArtist(artist) {
-		if (this.state.selectedArtist === artist) {
+		if (this.state.selectedArtistId === artist) {
 			this.setState({
-				selectedArtist: null
+				selectedArtistId: null
 			});
 		} else {
 			this.setState({
-				selectedArtist: artist
+				selectedArtistId: artist.id
 			});
 		}
 	}
@@ -60,8 +56,9 @@ class Artists extends Component {
 	renderArtist(artist) {
 		return(
 			<div key={artist.id} onClick={() => this.toggleArtist(artist)}>
-					<img className='thumbnail' src={artist._links.thumbnail.href} />
-					<h3>{artist.name}</h3>
+				<img className='thumbnail' src={artist._links.thumbnail.href} />
+				<h3>{artist.name}</h3>
+				{this.state.selectedArtistId === artist.id ? <Works artist={artist} /> : '' }
 			</div>
 		)
 	}
@@ -75,8 +72,6 @@ class Artists extends Component {
 	render() {
 		return (
 			<div>
-				{this.state.selectedArtist ? <Works artist={this.state.selectedArtist}/> 
-				: <h1>select an artist</h1>}
 				{this.state.artistDataLoaded ? 
 					this.state.artistData.map(this.renderArtist) : ''}
 			</div>
