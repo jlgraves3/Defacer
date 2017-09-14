@@ -2,35 +2,40 @@ import React, { Component } from 'react';
 import './App.css';
 import Nav from './components/Nav';
 import Artists from './components/Artists';
+import Works from './components/Works';
+
 import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentPainting: null,
+      currentArtwork: null,
       selected: false,
     }
-    this.selectPainting = this.selectPainting.bind(this);
+    this.selectArtwork = this.selectArtwork.bind(this);
   }
 
-  selectPainting(paiting) {
+  //set artwork to be sketched over
+  selectArtwork(artwork) {
     this.setState({
-      currentPainting: paiting,
+      currentArtwork: artwork,
       selected: true,
     })
   }
 
   render() {
     return (
-      <div className="App">
-      <Nav />
-      <Artists />
-      </div>
+      <Router>
+        <div className="App">
+        <Nav />
+        <Artists />
+        </div>
+      </Router>
     );
   }
 }
