@@ -3,6 +3,11 @@ nav {
   height: 40px;
 }
 
+h2 {
+  font-size: 20px;
+  text-align: center;
+}
+
 h3 {
   font-size: 16px;
 }
@@ -49,3 +54,32 @@ header {
 .artwork img {
   width: 100%;
 }
+
+#sketch-container {
+  background-color: pink;
+  border: 2px solid red;
+  position: relative;
+  width: 50vw;
+  height: 100%;
+  left: 50px;
+}
+
+#sketch-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+canvas {
+  position: absolute;
+  left: 0;
+  z-index: 5;
+  border: 2px solid lime;
+  width: 100%;
+}
+
+
+
+

@@ -23,6 +23,7 @@ class App extends Component {
 
   //set artwork to be sketched over
   selectArtwork(artwork) {
+    console.log(artwork)
     this.setState({
       currentArtwork: artwork,
       selected: true,
@@ -34,7 +35,7 @@ class App extends Component {
       <Router>
         <div className="App">
         <Nav />
-        {this.state.selected ? <Canvas /> : <Artists selectArtwork={this.selectArtwork}/>}
+        {this.state.selected ? <Canvas artwork={this.state.currentArtwork} /> : <Artists selectArtwork={this.selectArtwork}/>}
         </div>
       </Router>
     );
