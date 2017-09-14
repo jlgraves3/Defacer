@@ -2,3 +2,7 @@ nav {
   background-color: black;
   height: 40px;
 }
+
+.thumbnail {
+  width: 200px;
+}
