@@ -18,11 +18,11 @@ class Artists extends Component {
 			],
 			artistData: [],
 			artistDataLoaded: false,
-			selectedArtistId: null,
+			selectedArtist: null,
 		}
 		this.renderArtist = this.renderArtist.bind(this);
 		this.toggleArtist = this.toggleArtist.bind(this);
-		this.renderWorks = this.renderWorks.bind(this);
+		this.renderHelper = this.renderHelper.bind(this);
 	}
 
 	componentWillMount() {
@@ -36,19 +36,18 @@ class Artists extends Component {
 						artistData: artistData,
 						artistDataLoaded: true,
 				}); 
-			})
-			.catch(err => console.log(err));
-		})
+			}).catch(err => console.log(err));
+		});
 	}
 
 	toggleArtist(artist) {
-		if (this.state.selectedArtistId === artist) {
+		if (this.state.selectedArtist === artist) {
 			this.setState({
-				selectedArtistId: null
+				selectedArtist: null
 			});
 		} else {
 			this.setState({
-				selectedArtistId: artist.id
+				selectedArtist: artist
 			});
 		}
 	}
@@ -58,22 +57,29 @@ class Artists extends Component {
 			<div key={artist.id} onClick={() => this.toggleArtist(artist)}>
 				<img className='thumbnail' src={artist._links.thumbnail.href} />
 				<h3>{artist.name}</h3>
-				{this.state.selectedArtistId === artist.id ? <Works artist={artist} /> : '' }
 			</div>
 		)
 	}
 
-	renderWorks() {
+	renderHelper() {
+		console.log('helper')
 		if (this.state.selectedArtist) {
-			return <Works />
+			console.log('IS SELECTED')
+			return 	<Works artist={this.state.selectedArtist} toggleArtist={this.toggleArtist} /> 
+		} else {
+			console.log('NONE IS SELECTED')
+			return (
+				<div className='container'>
+				{this.state.artistData.map(this.renderArtist)}
+				</div>
+			)
 		}
 	}
 
 	render() {
 		return (
 			<div>
-				{this.state.artistDataLoaded ? 
-					this.state.artistData.map(this.renderArtist) : ''}
+				{this.state.artistDataLoaded ? this.renderHelper() : ''}
 			</div>
 		)
 	}

@@ -27,8 +27,8 @@ class Works extends Component {
 	renderArtwork(artwork) {
 		console.log(artwork)
 		return (
-			<div key={artwork.id} className='works'>
-				<img src={artwork._links.image.href.replace("{image_version}","large")} />
+			<div key={artwork.id}>
+				<img src={artwork._links.image.href.replace("{image_version}","medium")} />
 				<h3>{artwork.title}</h3>
 			</div>
 		);
@@ -37,9 +37,13 @@ class Works extends Component {
 	render() {
 		return (
 			<div>
-			<h1>{this.props.artist.name}</h1>
-				{this.state.artworksLoaded ? 
-					this.state.artworks.map(this.renderArtwork) : ''}
+			<h1>{this.props.artist.name} 
+				 <span id='x' onClick={() => this.props.toggleArtist(this.props.artist)}> × </span> 
+			</h1>
+				<div className='container'>
+					{this.state.artworksLoaded ? 
+						this.state.artworks.map(this.renderArtwork) : ''}
+				</div>
 			</div>
 		)
 	}

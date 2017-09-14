@@ -6,3 +6,11 @@ nav {
 .thumbnail {
   width: 200px;
 }
+
+.container {
+  margin: 50px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
