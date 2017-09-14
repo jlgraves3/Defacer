@@ -10,4 +10,18 @@ artistRoutes.get('/', apiHelper.getArtists, (req,res) => {
 	});
 });
 
+artistRoutes.get('/:artist', apiHelper.getArtist, (req,res) => {
+	res.json({
+		message: 'ok',
+		data: res.locals.data
+	});
+});
+
+artistRoutes.get('/:artist/works',apiHelper.getArtworks, (req,res) => {
+	res.json({
+		message: 'ok',
+		data: res.locals.data
+	});
+});
+
 module.exports = artistRoutes;
