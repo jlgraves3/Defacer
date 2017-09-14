@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+require('dotenv').config();
+
 app.use(logger('dev'));
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -19,6 +21,9 @@ app.listen(PORT, () => {
 app.get('/', (req,res) => {
 	res.send('hello world');
 });
+
+const artistRoutes = require('./routes/artist-routes');
+app.use('/artists', artistRoutes);
 
 
 //error handler
