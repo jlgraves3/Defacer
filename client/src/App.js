@@ -3,6 +3,7 @@ import './App.css';
 import Nav from './components/Nav';
 import Artists from './components/Artists';
 import Works from './components/Works';
+import Canvas from './components/Canvas';
 
 import {
   BrowserRouter as Router,
@@ -33,7 +34,7 @@ class App extends Component {
       <Router>
         <div className="App">
         <Nav />
-        <Artists selectArtwork={this.selectArtwork}/>
+        {this.state.selected ? <Canvas /> : <Artists selectArtwork={this.selectArtwork}/>}
         </div>
       </Router>
     );
