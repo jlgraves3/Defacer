@@ -22,9 +22,13 @@
   "dependencies": {
     "axios": "^0.16.2",
     "body-parser": "^1.18.1",
+    "cookie-parser": "^1.4.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
+    "express-session": "^1.15.5",
     "morgan": "^1.8.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pg-promise": "^6.5.4",
     "superagent": "^3.6.0",
     "traverson": "^6.0.3"
