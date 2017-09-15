@@ -4,6 +4,8 @@ import Nav from './components/Nav';
 import Artists from './components/Artists';
 import Works from './components/Works';
 import Canvas from './components/Canvas';
+import Register from './components/Register';
+import Login from './components/Login';
 
 import {
   BrowserRouter as Router,
@@ -55,6 +57,8 @@ class App extends Component {
               discard={this.discard} /> 
         : <Artists 
               selectArtwork={this.selectArtwork} />}
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/login" component={Login} />
         </div>
       </Router>
     );
