@@ -96,4 +96,40 @@ canvas {
   margin: 5px 0;
 }
 
+.form {
+  text-align: center;
+}
 
+.form form {
+  display: flex;
+  flex-direction: column;
+  background-color: lightgray;
+  padding: 20px;
+  align-items: center;
+  width: 350px;
+  margin: auto;
+}
+
+input {
+  padding: 5px;
+}
+
+label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+button {
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 10px; 
+  width: auto;
+  background-color: white;
+  border: 2px solid black;
+}
+
+
+a {
+  color: white;
+  text-decoration: none;
+}

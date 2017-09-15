@@ -81,13 +81,10 @@ class Artists extends Component {
 	}
 
 	renderHelper() {
-		console.log('helper')
 		if (this.state.selectedArtist) {
-			console.log('IS SELECTED')
 			return 	<Works artist={this.state.selectedArtist} toggleArtist={this.toggleArtist} 
 			selectArtwork={this.props.selectArtwork} /> 
 		} else {
-			console.log('NONE IS SELECTED')
 			return (
 				<div className='container'>
 				{this.state.artistData.map(this.renderArtist)}

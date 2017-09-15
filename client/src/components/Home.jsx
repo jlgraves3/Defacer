@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import Artists from './Artists';
 import Works from './Works';
 import Canvas from './Canvas';
