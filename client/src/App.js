@@ -40,12 +40,7 @@ class App extends Component {
   }
 
   resetCanvas(artwork) {
-    this.discard();
-    this.selectArtwork(artwork);
-    let canvas = document.getElementsByClassName('canvas');
-    let parent = document.getElementById('sketch-container');
-    parent.removeChild(canvas);
-    console.log(canvas)
+    
   }
 
   render() {

@@ -37,7 +37,7 @@ class Canvas extends Component {
 
 	tools() {
 		return(
-			<div className='tools'>
+			<div className='options'>
 				<button onClick={this.props.discard}>Discard</button>
 				<button onClick={() => this.forceUpdate()}>Reset</button>
 				<div>
@@ -60,6 +60,10 @@ class Canvas extends Component {
 							size: parseInt(e.target.value)
 						})} />
 				</div>
+				<div>
+					<label>tool </label>
+
+				</div>
 			</div>
 		)
 	}
@@ -68,7 +72,7 @@ class Canvas extends Component {
 		const src= this.props.artwork._links.image.href.replace("{image_version}","large");
 		return(
 			<div>
-				<h2>{this.props.artwork.title}</h2>
+				<h1>{this.props.artwork.title}</h1>
 				<div id='sketch-container' width={this.state.width} height={this.state.height}>
 					<img onLoad={this.getDimensions} src={src} />
 					{this.state.dimensionsLoaded ? 

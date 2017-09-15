@@ -80,7 +80,7 @@ canvas {
   width: 100%;
 }
 
-.tools {
+.options {
   float: right;
   background-color: #EEEEEE;
   margin: 0 20px;
@@ -92,7 +92,7 @@ canvas {
   font-weight: bold;
 }
 
-.tools div, .tools button {
+.options div, .options button {
   margin: 5px 0;
 }
 
