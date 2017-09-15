@@ -41,12 +41,23 @@ class Canvas extends Component {
 				<button onClick={this.props.discard}>Discard</button>
 				<button onClick={() => this.forceUpdate()}>Reset</button>
 				<div>
-					<label>color   </label>
+					<label>color </label>
 					<input 
 						type='color' 
 						value={this.state.color} 
 						onChange={(e) => this.setState({
 							color: e.target.value,
+						})} />
+				</div>
+				<div>
+					<label>size </label>
+					<input 
+						type='range'
+						min='1'
+						max='20'
+						value={this.state.size} 
+						onChange={(e) => this.setState({
+							size: parseInt(e.target.value)
 						})} />
 				</div>
 			</div>
