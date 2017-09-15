@@ -17,12 +17,13 @@ class Canvas extends Component {
 			width: 0,
 			dimensionsLoaded: false,
 			size: 5,
-			color: 'black',
+			color: '#000000',
 			fill: '',
 			tool: TOOL_PENCIL,
 		}
 		this.getDimensions = this.getDimensions.bind(this);
 		this.tools = this.tools.bind(this);
+		this.clearCanvas = this.clearCanvas.bind(this);
 	}
 	/* used https://stackoverflow.com/questions/39092859/get-dimensions-of-image-with-react
 	 thread answer to help */
@@ -39,7 +40,7 @@ class Canvas extends Component {
 		return(
 			<div className='options'>
 				<button onClick={this.props.discard}>Discard</button>
-				<button onClick={() => this.forceUpdate()}>Reset</button>
+				<button onClick={this.clearCanvas}>Reset</button>
 				<div>
 					<label>color </label>
 					<input 
@@ -66,6 +67,11 @@ class Canvas extends Component {
 				</div>
 			</div>
 		)
+	}
+
+	clearCanvas() {
+		const canvas = document.getElementsByClassName('canvas')[0];
+		canvas.width = canvas.width;
 	}
 
 	render() {
