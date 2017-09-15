@@ -1,3 +1,7 @@
+body {
+  font-family: 'Avenir';
+}
+
 nav {
   background-color: black;
   height: 40px;
@@ -78,8 +82,18 @@ canvas {
 
 .tools {
   float: right;
+  background-color: #EEEEEE;
+  margin: 0 20px;
+  padding: 20px;
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-weight: bold;
 }
 
-
+.tools div, .tools button {
+  margin: 5px 0;
+}
 
 

@@ -17,7 +17,7 @@ class Canvas extends Component {
 			width: 0,
 			dimensionsLoaded: false,
 			size: 5,
-			color: 'red',
+			color: 'black',
 			fill: '',
 			tool: TOOL_PENCIL,
 		}
@@ -41,7 +41,7 @@ class Canvas extends Component {
 				<button onClick={this.props.discard}>Discard</button>
 				<button onClick={() => this.forceUpdate()}>Reset</button>
 				<div>
-					<label>color:</label>
+					<label>color   </label>
 					<input 
 						type='color' 
 						value={this.state.color} 

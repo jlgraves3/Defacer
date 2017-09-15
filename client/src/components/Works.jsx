@@ -28,7 +28,7 @@ class Works extends Component {
 	renderArtwork(artwork) {
 		return (
 			<div key={artwork.id} className='artwork' onClick={() => this.props.selectArtwork(artwork)}>
-				<img src={artwork._links.image.href.replace("{image_version}","medium")} />
+				<img src={artwork._links.image.href.replace("{image_version}","large")} />
 				<h3>{artwork.title}</h3>
 			</div>
 		);

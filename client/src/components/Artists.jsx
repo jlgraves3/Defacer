@@ -12,15 +12,26 @@ class Artists extends Component {
 		this.state = {
 			artists: [
 				'pablo-picasso',
-				'michelangel-buonarroti',
+				'michelangelo-buonarroti',
 				'leonardo-da-vinci',
 				'vincent-van-gogh',
-				'keith-haring',
 				'hieronymus-bosch',
 				'albrecht-durer',
 				'francisco-de-goya',
 				'edgar-degas',
-				'edvard-munch',
+				'claude-monet',
+				'georges-seurat',
+				'johannes-vermeer',
+				'edouard-manet',
+				'sandro-botticelli',
+				'winslow-homer',
+				//'auguste-rodin',
+				'paul-cezanne',
+				'el-greco',
+				'peter-paul-rubens',
+				'camille-pissarro',
+				'paul-gauguin',
+				'mary-cassatt',
 			],
 			artistData: [],
 			artistDataLoaded: false,
@@ -34,7 +45,7 @@ class Artists extends Component {
 	componentWillMount() {
 		console.log('will mount');
 		const artistData = [];
-		this.state.artists.forEach(artist => {
+		this.state.artists.sort().forEach(artist => {
 			axios.get(`/artists/${artist}`)
 			.then(res => {
 				const data = res.data.data;
