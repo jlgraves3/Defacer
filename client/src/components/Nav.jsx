@@ -1,43 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { 
+	login, 
+	logout, 
+	isLoggedIn 
+} from '../utils/AuthService';
 
 class Nav extends Component {
-	constructor() {
-		super();
-		this.loggedInNav = this.loggedInNav.bind(this);
-		this.loggedOutNav = this.loggedOutNav.bind(this);
-		this.logout = this.logout.bind(this);
-	}
-
-	logout() {
-		axios.get('/auth/logout')
-		.then(res => {
-			alert(res.data);
-		}).catch(err => console.log(err));
-	}
-
-	loggedInNav() {
-		return (
-			<nav>
-				<a>Profile</a>
-				<a onClick={this.logout}>Logout</a>
-			</nav>
-			)
-	}
-
-	loggedOutNav() {
-		return (
-			<nav>
-				<Link to='/login'>Login</Link>
-				<Link to='/register'>Register</Link>
-				<a onClick={this.logout}>Logout</a>
-			</nav>
-			)
-	}
-
 	render () {
-		return this.props.loggedIn ? this.loggedInNav() : this.loggedOutNav() 
+		return (
+			<nav>
+				{isLoggedIn() ? <a>Profile</a> : <a onClick={() => login()}>Log In</a>}
+				{isLoggedIn() ? <a onClick={() => logout()}>Log Out</a> : <a>Register</a>} 
+					
+			</nav>
+		)
 	}
 }
 
