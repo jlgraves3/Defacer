@@ -4,14 +4,34 @@ import axios from 'axios';
 class Register extends Component {
 	constructor() {
 		super();
+		this.state = {
+			username: null,
+			password: null,
+		}
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleSubmit(e) {
-		const user = {
-			username: e.target.username,
-			password: e.target.password,
+		e.preventDefault();
+		let user = {
+			username: this.state.username,
+			password: this.state.password
 		}
-		console.log(user);
+		console.log(user)
+		axios.post('/auth/register', {
+			username: this.state.username,
+			password: this.state.password
+		}).then(res => {
+			console.log(res.data);
+		}).catch(err => console.log(err));
+	}
+
+	handleChange(e) {
+		const name = e.target.name;
+		this.setState({
+			[name]: e.target.value
+		});
 	}
 
 	render() {
@@ -22,12 +42,16 @@ class Register extends Component {
 				<label>Username: </label>
 				<input 
 					type='text' 
-					name='username' />
+					name='username' 
+					value={this.state.username}
+					onChange={this.handleChange} />
 				<label>Password: </label>
 					<input 
 						type='password' 
-						name='password' />
-					<button type='submit'>Login</button>
+						name='password'
+						value={this.state.password}
+						onChange={this.handleChange} />
+					<button type='submit'>Register</button>
 			</form>
 			</div>
 		)

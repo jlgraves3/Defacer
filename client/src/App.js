@@ -18,7 +18,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      user: null
+      user: null,
+      loggedIn: false,
     }
     this.handleLogin = this.handleLogin.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
@@ -26,17 +27,26 @@ class App extends Component {
   }
 
   handleLogin(data) {
+    this.setState({
+      loggedIn: true,
+    });
     alert(data);
   }
 
   handleRegister(data) {
-    alert(data)
+    alert(data);
+    this.setState({
+      loggedIn: true,
+    });
   }
 
   handleLogOut() {
     axios.get('/auth/logout')
     .then(res => {
       alert(res.data);
+      this.setState({
+        loggedIn: false,
+      })
     })
   }
 
@@ -44,7 +54,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-        <Nav />
+        <Nav handleLogOut={this.handleLogOut} loggedIn={this.state.loggedIn} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/" component={Home} />

@@ -7,12 +7,19 @@ const usersController = require('../controllers/users-controller');
 //register - create new user
 authRouter.post('/register', usersController.create);
 
-//login
+//login - authenticate returning user
+
 authRouter.post('/login', passport.authenticate('local', {
 	succesRedirect: '/auth/success',
 	failureRedirect: '/auth/failure',
 	failureFlash: true,
-}));
+})); 
+
+authRouter.post('/login', (req,res) => {
+	res.json({
+		message: testing,
+	})
+})
 
 authRouter.get('/success',(req,res) => {
 	res.json({
