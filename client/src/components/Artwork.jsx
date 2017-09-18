@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class Artwork extends Component {
 	constructor() {
@@ -11,7 +12,6 @@ class Artwork extends Component {
 	}
 
 	componentWillMount() {
-		console.log(this.props)
 		axios.get(`/gallery/${this.props.match.params.id}`)
 		.then(res => {
 			this.setState({
@@ -26,7 +26,9 @@ class Artwork extends Component {
 			const artwork = this.state.artwork;
 			return (
 				<div className='single'>
+				<Link to='/gallery' className='back'>Back</Link>
 					<h1>{artwork.title || 'Untitled'}</h1>
+					<h2>{artwork.username}</h2>
 					<div className='artwork-single'>
 						<img src={artwork.painting_src} />
 						<img src={artwork.canvas_src} />
