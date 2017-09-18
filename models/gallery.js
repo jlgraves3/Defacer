@@ -4,9 +4,9 @@ const Gallery = {};
 
 Gallery.findAll = () => {
 	return db.query(`
-		SELECT * FROM gallery 
+		SELECT gallery.id,username,user_id,title,painting_src,canvas_src FROM gallery 
 		JOIN users ON gallery.user_id = users.id
-		ORDER BY id DESC`);
+		ORDER BY gallery.id DESC `);
 }
 
 Gallery.findById = id => {
