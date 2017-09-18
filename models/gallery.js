@@ -12,7 +12,8 @@ Gallery.findAll = () => {
 Gallery.findById = id => {
 	return db.oneOrNone(`
 		SELECT * FROM gallery 
-		WHERE id = $1
+		JOIN users ON gallery.user_id = users.id
+		WHERE gallery.id = $1
 	`,[id]);
 }
 
