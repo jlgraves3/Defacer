@@ -1,6 +1,8 @@
 const express = require('express');
 const galleryRoutes = express.Router();
 
-galleryRoutes.get('/', galleryRoutes.index);
+const galleryController = require('../controllers/gallery-controller')
+
+galleryRoutes.get('/', galleryController.index);
 
 module.exports = galleryRoutes;
