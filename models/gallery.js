@@ -3,7 +3,7 @@ const db = require('../db/config');
 const Gallery = {};
 
 Gallery.findAll = () => {
-	return db.query("SELECT * FROM gallery");
+	return db.query("SELECT * FROM gallery ORDER BY id DESC");
 }
 
 Gallery.findById = id => {
@@ -25,7 +25,7 @@ Gallery.delete = id => {
 	return db.none(`
 		DELETE FROM gallery
 		WHERE id = $1
-	`,[id])
+	`,[id]);
 }
 
 module.exports = Gallery;
