@@ -10,4 +10,8 @@ export default class Auth {
 		responseType: 'token id_token',
 		scope: 'openid'
 	});
+
+	login() {
+		this.auth0.authorize();
+	}
 }
