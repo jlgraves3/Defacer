@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
-comnst methodOverride = require('method-override');
+const methodOverride = require('method-override');
 
 const app = express();
 
