@@ -96,6 +96,7 @@ class Artists extends Component {
 	render() {
 		return (
 			<div>
+				{this.state.selectedArtist ? '' : <h1>Artists</h1>}
 				{this.state.artistDataLoaded ? this.renderHelper() : ''}
 			</div>
 		)

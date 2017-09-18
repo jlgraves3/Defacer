@@ -27,6 +27,7 @@ class Canvas extends Component {
 			canvas_src: '',
 			redirect: false,
 			redirecting: '',
+			error: '',
 		}
 		this.getDimensions = this.getDimensions.bind(this);
 		this.tools = this.tools.bind(this);
@@ -68,13 +69,19 @@ class Canvas extends Component {
 
 	//adds canvas to gallery
 	saveCanvas() {
+		if (!this.props.loggedIn) {
+			this.setState({
+				error: 'You must be logged in to save your work.'
+			});
+			return;
+		}
 		const canvas = document.getElementsByClassName('canvas')[0];
 		this.setState({
 			canvas_src: canvas.toDataURL()
 		});
 
 		const options = {
-			user_id: 1,
+			user_id: this.props.user.id,
 			title: this.state.title,
 			painting_src: this.state.painting_src,
 			canvas_src: canvas.toDataURL(),
@@ -121,6 +128,7 @@ class Canvas extends Component {
 						})} />
 				</div>
 				<button onClick={this.saveCanvas}>Save to Gallery</button>
+				<p className='error'>{this.state.error}</p>
 			</div>
 		)
 	}

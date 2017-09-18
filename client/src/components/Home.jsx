@@ -14,21 +14,6 @@ class Home extends Component {
     this.selectArtwork = this.selectArtwork.bind(this);
     this.discard = this.discard.bind(this);
   }
-/*
-  ComponentDidMount() {
-     axios.post('https://vandelizer-auth.com/oauth/token', {
-      headers: {
-        'content-type': 'application/json'
-      },
-      data: {
-        "client_id": "o0m6pxe0Aa39YE4SAZNqYdfia38QFtnW", 
-        "client_secret": "zg4WXZNM3Z_IEgmpZEC1eks1N2iBHY_tzW8M28BZRS0zTqqCrNZNREHCQ9lU2_Kc"
-      }
-    }).then(res => {
-      console.log('$4$$$$$$$$$$$$$$$$$$$$$')
-      console.log(res.data);
-    }).catch(err => console.log(err));
-  } */
 
   //set artwork to be sketched over
   selectArtwork(artwork) {
@@ -39,6 +24,7 @@ class Home extends Component {
     })
   }
 
+  //discard current canvas
   discard() {
     this.setState({
       currentArtwork: null,
@@ -54,7 +40,9 @@ class Home extends Component {
           <Canvas 
               artwork={this.state.currentArtwork} 
               resetCanvas={this.resetCanvas}
-              discard={this.discard} /> 
+              discard={this.discard} 
+              loggedIn={this.props.loggedIn} 
+              user={this.props.user}/> 
         : <Artists 
               selectArtwork={this.selectArtwork} />}
       </div>
