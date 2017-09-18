@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import Auth from '../Auth/Auth';
 
 class Login extends Component {
 	constructor() {
@@ -7,24 +7,22 @@ class Login extends Component {
 		this.state = {
 			username: null,
 			password: null,
+			status: '',
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleSubmit(e) {
-		let user = {
-			username: this.state.username,
-			password: this.state.password
-		}
-		console.log(user)
 		e.preventDefault();
-		axios.post('/auth/login', {
-			username: this.state.username,
-			password: this.state.password
-		}).then(res => {
-			console.log(res.data);
-		}).catch(err => console.log(err));
+		Auth.login(this.state.username,this.state.password)
+		.catch(err => {
+			this.setState((prevState,props) => {
+				return {status: "Error"}
+			});
+		});
+
+		console.log(user)
 	}
 
 	handleChange(e) {
@@ -37,25 +35,30 @@ class Login extends Component {
 	render() {
 		return (
 			<div className='form'>
-			<h1>Login</h1>
+			<h1>Login {this.state.status}</h1>
 			<form onSubmit={(e) => this.handleSubmit(e)}>
-				<label>Username: </label>
-				<input 
-					type='text' 
-					name='username' 
-					value={this.state.username}
-					onChange={this.handleChange} />
-				<label>Password: </label>
+				<label>Username </label>
+					<input 
+						type='text' 
+						name='username' 
+						value={this.state.username}
+						onChange={this.handleChange} 
+						placeholder='username'
+						required />
+				<label>Password </label>
 					<input 
 						type='password' 
 						name='password'
 						value={this.state.password}
-						onChange={this.handleChange} />
+						onChange={this.handleChange} 
+						placeholder='password'
+						required />
 					<button type='submit'>Login</button>
 			</form>
 			</div>
 		)
 	}
+
 }
 
 export default Login;
