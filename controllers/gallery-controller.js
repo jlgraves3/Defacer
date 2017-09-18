@@ -22,6 +22,17 @@ galleryController.show = (req,res) => {
 	}).catch(err => console.log(err));
 }
 
+//gets all artworks by given user
+galleryController.showUser = (req,res) => {
+	Gallery.findByUser(req.params.user_id)
+	.then(artworks => {
+		res.json({
+			message: 'ok',
+			data: artworks,
+		});
+	}).catch(err => console.log(err));
+}
+
 galleryController.create = (req,res) => {
 	Gallery.create({
 		user_id: req.body.user_id,
