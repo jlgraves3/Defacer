@@ -3,18 +3,23 @@ const User = require('../models/user');
 
 const usersController = {};
 
-//create new user
+//add new user to database
 usersController.create = (req,res) => {
 	//encrypt password
 	const salt = bcrypt.genSaltSync();
-	const hash = bcrypt.hashSync(req.body.password, salt);
+	const hash = bcrypt.hashSync(req.body.options.password, salt);
 	//add to database
 	User.create({
-		username: req.body.username,
+		username: req.body.options.username,
 		password_digest: hash
 	}).then(user => {
 		req.login(user, (err) => {
 			if (err) return next(err);
+			res.json({
+				message: 'register successful',
+				user: user,
+				auth: true,
+			});
 		});
 	}).catch(err => {
 		console.log(err);
