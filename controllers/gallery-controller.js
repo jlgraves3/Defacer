@@ -1,4 +1,4 @@
-const Gallery = require('../models/gallert');
+const Gallery = require('../models/gallery');
 
 const galleryController = {};
 
