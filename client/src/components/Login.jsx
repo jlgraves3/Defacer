@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Auth from '../utils/AuthService';
+import { Redirect } from 'react-router';
 
 class Login extends Component {
 	constructor() {
@@ -9,23 +9,7 @@ class Login extends Component {
 			password: '',
 			status: '',
 		}
-		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-	}
-
-	handleSubmit(e) {
-		e.preventDefault();
-		Auth.login(this.state.username,this.state.password)
-		.then(() => {
-			this.setState((prevState,props) => {
-				return {status: "Login successful"}
-			})
-		})
-		.catch(err => {
-			this.setState((prevState,props) => {
-				return {status: "Error: " + err}
-			});
-		});
 	}
 
 	handleChange(e) {
@@ -37,9 +21,9 @@ class Login extends Component {
 
 	render() {
 		return (
-			<div className='form'>
+			<div className='form' >
+			<form>
 			<h1>Login {this.state.status}</h1>
-			<form onSubmit={(e) => this.handleSubmit(e)}>
 				<label>Username </label>
 					<input 
 						type='text' 
@@ -56,9 +40,11 @@ class Login extends Component {
 						onChange={this.handleChange} 
 						placeholder='password'
 						required />
-				<button type='submit'>Login</button>
+				<button type='submit' 
+					onClick={(e) => this.props.handleLogin(e,this.state.username,this.state.password)} >Login</button>
 			</form>
 			</div>
+
 		)
 	}
 
