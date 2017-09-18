@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Auth from '../Auth/Auth';
+import Auth from '../utils/AuthService';
 
 class Login extends Component {
 	constructor() {
 		super();
 		this.state = {
-			username: null,
-			password: null,
+			username: '',
+			password: '',
 			status: '',
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,13 +16,16 @@ class Login extends Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		Auth.login(this.state.username,this.state.password)
+		.then(() => {
+			this.setState((prevState,props) => {
+				return {status: "Login successful"}
+			})
+		})
 		.catch(err => {
 			this.setState((prevState,props) => {
-				return {status: "Error"}
+				return {status: "Error: " + err}
 			});
 		});
-
-		console.log(user)
 	}
 
 	handleChange(e) {
@@ -53,7 +56,7 @@ class Login extends Component {
 						onChange={this.handleChange} 
 						placeholder='password'
 						required />
-					<button type='submit'>Login</button>
+				<button type='submit'>Login</button>
 			</form>
 			</div>
 		)

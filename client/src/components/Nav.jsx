@@ -10,9 +10,8 @@ class Nav extends Component {
 	render () {
 		return (
 			<nav>
-				{isLoggedIn() ? <a>Profile</a> : <a onClick={() => login()}>Log In</a>}
-				{isLoggedIn() ? <a onClick={() => logout()}>Log Out</a> : <a>Register</a>} 
-					
+				<Link to='/login'>Log In</Link>	
+				<Link to='/gallery'>Gallery</Link>	
 			</nav>
 		)
 	}
