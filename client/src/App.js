@@ -7,6 +7,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Home from './components/Home';
 import Gallery from './components/Gallery';
+import Artwork from './components/Artwork';
 
 import {
   BrowserRouter as Router,
@@ -22,17 +23,35 @@ class App extends Component {
       user: null,
       loggedIn: false,
     }
+    this.handleLogin = this.handleLogin.bind(this);
   }
+
+//help from Dan Beebe
+  handleLogin(e, username, password) {
+    e.preventDefault();
+    axios.post('/auth/login', {
+      username,
+      password,
+    }).then(res => {
+      console.log(res.data);
+      this.setState({
+        user: res.data.user,
+        loggedIn: true,
+      });
+    }).catch(err => console.log(err));
+  }
+
 
   render() {
     return (
       <Router>
         <div className="App">
-        <Nav />
-        <Route exact path="/" component={Home} />
+        <Nav loggedIn={this.state.loggedIn} user={this.state.user} />
+        <Route exact path="/" render={() => <Home loggedIn={this.state.loggedIn} user={this.state.user}/>} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin} />} />
         <Route exact path="/gallery" component={Gallery} />
+        <Route exact path="/gallery/:id" component={Artwork} />
 
         </div>
       </Router>
