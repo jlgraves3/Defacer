@@ -45,5 +45,14 @@ galleryController.create = (req,res) => {
 	.catch(err => console.log(err));
 }
 
+galleryController.destroy = (req,res) => {
+	Gallery.delete(req.params.id)
+	.then(() => {
+		res.json({
+			message: 'deleted successfully',
+		});
+	}).catch(err => console.log(err));
+}
+
 
 module.exports = galleryController;
