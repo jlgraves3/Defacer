@@ -3,7 +3,10 @@ const db = require('../db/config');
 const Gallery = {};
 
 Gallery.findAll = () => {
-	return db.query("SELECT * FROM gallery ORDER BY id DESC");
+	return db.query(`
+		SELECT * FROM gallery 
+		JOIN users ON gallery.user_id = users.id
+		ORDER BY id DESC`);
 }
 
 Gallery.findById = id => {
@@ -11,6 +14,13 @@ Gallery.findById = id => {
 		SELECT * FROM gallery 
 		WHERE id = $1
 	`,[id]);
+}
+
+Gallery.findByUser = user_id => {
+	return db.query(`
+		SELECT * FROM gallery
+		WHERE user_id = $1	
+	`,[user_id]);
 }
 
 Gallery.create = artwork => {
