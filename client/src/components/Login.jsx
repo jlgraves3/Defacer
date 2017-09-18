@@ -7,7 +7,6 @@ class Login extends Component {
 		this.state = {
 			username: '',
 			password: '',
-			status: '',
 		}
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -20,6 +19,9 @@ class Login extends Component {
 	}
 
 	render() {
+		if (this.state.redirect) {
+			return <Redirect to='/' />
+		}
 		return (
 			<div className='form' >
 			<form>
@@ -41,7 +43,13 @@ class Login extends Component {
 						placeholder='password'
 						required />
 				<button type='submit' 
-					onClick={(e) => this.props.handleLogin(e,this.state.username,this.state.password)} >Login</button>
+					onClick={(e) => {
+							this.props.handleLogin(e,this.state.username,this.state.password)
+							this.setState({
+								redirect: true,
+							});
+						}
+					} >Login</button>
 			</form>
 			</div>
 
