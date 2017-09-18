@@ -18,7 +18,7 @@ usersController.create = (req,res) => {
 			res.json({
 				message: 'register successful',
 				user: user,
-				auth: true,
+				auth: true
 			});
 		});
 	}).catch(err => {
