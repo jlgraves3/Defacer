@@ -23,7 +23,7 @@ class Gallery extends Component {
 
 	renderArtwork(artwork) {
 		return(
-			<div className='gallery-work'>
+			<div className='gallery-work' key={artwork.id}>
 				<img className='bottom' src={artwork.painting_src} />
 				<img className='top' src={artwork.canvas_src} />
 			</div>
