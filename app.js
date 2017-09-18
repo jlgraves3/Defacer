@@ -43,6 +43,9 @@ app.get('/', (req,res) => {
 const artistRoutes = require('./routes/artist-routes');
 app.use('/artists', artistRoutes);
 
+const galleryRoutes = require('./routes/gallery-routes');
+app.use('/gallery', galleryRoutes);
+
 const authRoutes = require('./routes/auth-routes');
 app.use('/auth', authRoutes);
 
