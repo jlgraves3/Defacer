@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-//import Sketchpad from 'sketchpad'
+import { Redirect } from 'react-router';
+import axios from 'axios';
+
 import {
 	SketchPad, 
 	TOOL_PENCIL, 
@@ -8,7 +10,7 @@ import {
 	TOOL_ELLIPSE
 } from 'react-sketchpad/lib';
 
-
+	
 class Canvas extends Component {
 	constructor() {
 		super();
@@ -20,15 +22,37 @@ class Canvas extends Component {
 			color: '#000000',
 			fill: '',
 			tool: TOOL_PENCIL,
+			title: '',
+			painting_src: '',
+			canvas_src: '',
+			redirect: false,
+			redirecting: '',
 		}
 		this.getDimensions = this.getDimensions.bind(this);
 		this.tools = this.tools.bind(this);
 		this.clearCanvas = this.clearCanvas.bind(this);
+		this.saveCanvas = this.saveCanvas.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
 	}
+
+	componentWillMount() {
+		console.log('will mount');
+		this.setState({
+			painting_src: this.props.artwork._links.image.href.replace("{image_version}","large"),
+		});
+	}
+
+	handleInputChange(e) {
+		const name = e.target.name;
+		this.setState({
+			[name]: e.target.value
+		});
+	}
+
 	/* used https://stackoverflow.com/questions/39092859/get-dimensions-of-image-with-react
 	 thread answer to help */
+	//gets dimensions of painting image so that they can be used for canvas size
 	getDimensions({target:img}) {
-		console.log('get dimensions')
 		this.setState({
 			height: img.offsetHeight,
 			width: img.offsetWidth,
@@ -36,6 +60,41 @@ class Canvas extends Component {
 		});
 	}	
 
+	//erases canvas contents to start new
+	clearCanvas() {
+		const canvas = document.getElementsByClassName('canvas')[0];
+		canvas.width = canvas.width;
+	}
+
+	//adds canvas to gallery
+	saveCanvas() {
+		const canvas = document.getElementsByClassName('canvas')[0];
+		this.setState({
+			canvas_src: canvas.toDataURL()
+		});
+
+		const options = {
+			user_id: 1,
+			title: this.state.title,
+			painting_src: this.state.painting_src,
+			canvas_src: canvas.toDataURL(),
+		}
+		axios.post('/gallery', options)
+		.then(() => {
+			this.setState({
+				redirect: true,
+				redirecting: '/gallery',
+			});
+		})
+		.catch(err => {
+			console.log(err)
+			this.setState({
+				redirect: true,
+				redirecting: '/gallery',
+			});
+		});
+	}
+	//renders canvas tools and save/discard buttons
 	tools() {
 		return(
 			<div className='options'>
@@ -61,39 +120,42 @@ class Canvas extends Component {
 							size: parseInt(e.target.value)
 						})} />
 				</div>
-				<div>
-					<label>tool </label>
-
-				</div>
+				<button onClick={this.saveCanvas}>Save to Gallery</button>
 			</div>
 		)
-	}
-
-	clearCanvas() {
-		const canvas = document.getElementsByClassName('canvas')[0];
-		canvas.width = canvas.width;
 	}
 
 	render() {
-		const src= this.props.artwork._links.image.href.replace("{image_version}","large");
-		return(
-			<div>
-				<h1>{this.props.artwork.title}</h1>
-				<div id='sketch-container' width={this.state.width} height={this.state.height}>
-					<img onLoad={this.getDimensions} src={src} />
-					{this.state.dimensionsLoaded ? 
-						<SketchPad 
-								width={this.state.width} 
-								height={this.state.height} 
-								color={this.state.color}
-								size={this.state.size}
-								items={[]} />
-						: ''}
+		if (this.state.redirect) {
+			return <Redirect to='/gallery' />
+		}
+		//const src= this.props.artwork._links.image.href.replace("{image_version}","large");
+		else {
+				return(
+					<div>
+						<input 
+							type='text'
+						 	name='title'
+							placeholder={`${this.props.artwork.title} v2`} 
+							value={this.state.title} 
+							onChange={this.handleInputChange} />
+						<div id='sketch-container' width={this.state.width} height={this.state.height}>
+							<img onLoad={this.getDimensions} src={this.state.painting_src} />
+							{this.state.dimensionsLoaded ? 
+								<SketchPad 
+										width={this.state.width} 
+										height={this.state.height} 
+										color={this.state.color}
+										size={this.state.size}
+										items={[]} />
+								: ''}
+							</div>
+						{this.tools()}
+						<div>
+						</div>
 					</div>
-				{this.tools()}
-			</div>
-
-		)
+				)
+			}
 	}
 
 }
