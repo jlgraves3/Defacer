@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Loading from './Loading';
 
 class Profile extends Component {
 	constructor() {
@@ -49,7 +50,7 @@ class Profile extends Component {
 				<h1>{this.props.user.username}</h1>
 				<h2>Your Artworks:</h2>
 				<div className='gallery-container'>
-					{this.state.userArtworksLoaded ? this.state.userArtworks.map(this.renderArtwork) : ''}
+					{this.state.userArtworksLoaded ? this.state.userArtworks.map(this.renderArtwork) :  <Loading />}
 				</div>
 			</div>
 		)

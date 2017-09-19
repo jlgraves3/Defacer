@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Loading from './Loading';
 
 class Works extends Component {
 	constructor() {
@@ -43,7 +44,7 @@ class Works extends Component {
 				</header>
 				<div className='container'>
 					{this.state.artworksLoaded ? 
-						this.state.artworks.map(this.renderArtwork) : ''}
+						this.state.artworks.map(this.renderArtwork) :  <Loading />}
 				</div>
 			</div>
 		)

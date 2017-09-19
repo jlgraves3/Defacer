@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Works from './Works';
+import Loading from './Loading';
 
 import {
   Link
@@ -98,7 +99,7 @@ class Artists extends Component {
 		return (
 			<div>
 				{this.state.selectedArtist ? '' : <h1>Artists</h1>}
-				{this.state.artistDataLoaded ? this.renderHelper() : ''}
+				{this.state.artistDataLoaded ? this.renderHelper() : <Loading />}
 			</div>
 		)
 	}

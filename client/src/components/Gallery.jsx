@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Loading from './Loading';
 
 class Gallery extends Component {
 	constructor() {
@@ -42,7 +43,7 @@ class Gallery extends Component {
 			<div>
 				<h1>Gallery</h1>
 				<div className='gallery-container'>
-				{this.state.artworksLoaded ? this.state.artworks.map(this.renderArtwork) : ''}
+				{this.state.artworksLoaded ? this.state.artworks.map(this.renderArtwork) :  <Loading />}
 				</div>
 			</div>
 		)

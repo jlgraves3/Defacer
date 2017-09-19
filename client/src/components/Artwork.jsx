@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Loading from './Loading';
 
 class Artwork extends Component {
 	constructor() {
@@ -49,7 +50,7 @@ class Artwork extends Component {
 				</div>
 			)
 		} else {
-			return <div></div>
+			return <Loading />
 		}
 	}
 }
