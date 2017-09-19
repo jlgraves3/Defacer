@@ -27,7 +27,7 @@ class Artwork extends Component {
 			return (
 				<div className='inline-buttons'>
 					<button>Edit</button>
-					<button onClick={() => this.props.handleDelete(this.state.artwork.id)}>Delete</button>
+					<button onClick={() => this.props.handleDelete(this.props.match.params.id)}>Delete</button>
 				</div>
 			)
 		}
