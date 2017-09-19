@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class Gallery extends Component {
 	constructor() {
@@ -23,10 +24,16 @@ class Gallery extends Component {
 
 	renderArtwork(artwork) {
 		return(
-			<div key={artwork.id} className='gallery-work' >
+			<Link to={`/gallery/${artwork.id}`} key={artwork.id}>
+			<div className='gallery-work'>
+				<div className='overlay'>
+					<h4>{artwork.title || 'Untitled'}</h4>
+					<h5>{artwork.username}</h5>
+				</div>
 				<img src={artwork.painting_src} />
 				<img src={artwork.canvas_src} />	
 			</div>
+			</Link>
 		)
 	}
 
