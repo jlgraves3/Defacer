@@ -44,6 +44,12 @@ h3 {
   font-weight: normal;
 }
 
+h4 {
+  font-family: 'Baskerville';
+  font-weight: normal;
+  font-size: 18px;
+}
+
 h5 {
   font-weight: normal;
 }
@@ -104,7 +110,7 @@ header {
 
 #sketch-container {
   position: relative;
-  width: 60vw;
+  width: 600px;
   left: 50px;
 }
 
