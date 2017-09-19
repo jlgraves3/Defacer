@@ -96,7 +96,7 @@ class App extends Component {
         <Route exact path="/register" render={() => <Register handleRegister={this.handleRegister} />} />
         <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin}/>} />
         <Route exact path="/gallery"  component={Gallery} />
-        <Route exact path="/gallery/:id" component={Artwork} />
+        <Route exact path="/gallery/:id" render={(props) => <Artwork {...props} loggedIn={this.state.loggedIn} user={this.state.user}/> } />
         <Route exact path="/profile" render={() => <Profile loggedIn={this.state.loggedIn} user={this.state.user} />} />
         </div>
       </Router>
