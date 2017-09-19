@@ -32,6 +32,7 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
 //help from Dan Beebe
@@ -84,6 +85,16 @@ class App extends Component {
     }
   }
 
+  handleDelete(id) {
+    axios.delete(`/gallery/${id}`)
+    .then(() => {
+      this.setState({
+        redirect: true,
+        path: '/gallery',
+      })
+    }).catch(err => console.log(err));
+  }
+
   render() {
     return (
       <Router>
@@ -96,7 +107,12 @@ class App extends Component {
         <Route exact path="/register" render={() => <Register handleRegister={this.handleRegister} />} />
         <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin}/>} />
         <Route exact path="/gallery"  component={Gallery} />
-        <Route exact path="/gallery/:id" render={(props) => <Artwork {...props} loggedIn={this.state.loggedIn} user={this.state.user}/> } />
+        <Route exact path="/gallery/:id" render={(props) => 
+          <Artwork {...props} 
+          loggedIn={this.state.loggedIn} 
+          user={this.state.user}
+          handleDelete={this.handleDelete} /> 
+        } />
         <Route exact path="/profile" render={() => <Profile loggedIn={this.state.loggedIn} user={this.state.user} />} />
         </div>
       </Router>
