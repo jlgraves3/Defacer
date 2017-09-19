@@ -48,8 +48,9 @@ class Profile extends Component {
 			<div>
 				<h1>{this.props.user.username}</h1>
 				<h2>Your Artworks:</h2>
-				{this.state.userArtworksLoaded ? this.state.userArtworks.map(this.renderArtwork) : ''}
-
+				<div className='gallery-container'>
+					{this.state.userArtworksLoaded ? this.state.userArtworks.map(this.renderArtwork) : ''}
+				</div>
 			</div>
 		)
 	}
