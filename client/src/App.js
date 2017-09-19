@@ -9,9 +9,9 @@ import Home from './components/Home';
 import Gallery from './components/Gallery';
 import Artwork from './components/Artwork';
 import Profile from './components/Profile';
+import Edit from './components/Edit';
 
 import { Redirect } from 'react-router';
-
 import {
   BrowserRouter as Router,
   Route,
@@ -27,12 +27,14 @@ class App extends Component {
       loggedIn: false,
       redirect: false,
       path: null,
+      artwork: null,
     }
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleEditPage = this.handleEditPage.bind(this);
   }
 
 //help from Dan Beebe
@@ -95,6 +97,14 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
+  handleEditPage(artwork,id) {
+    this.setState({
+      artwork: artwork,
+      redirect: true,
+      path: `/edit/${id}`
+    });
+  }
+
   render() {
     return (
       <Router>
@@ -111,8 +121,10 @@ class App extends Component {
           <Artwork {...props} 
           loggedIn={this.state.loggedIn} 
           user={this.state.user}
-          handleDelete={this.handleDelete} /> 
+          handleDelete={this.handleDelete} 
+          handleEditPage={this.handleEditPage} /> 
         } />
+        <Route exact path="/edit/:id" render={(props) => <Edit artwork={this.state.artwork}/>} />
         <Route exact path="/profile" render={() => <Profile loggedIn={this.state.loggedIn} user={this.state.user} />} />
         </div>
       </Router>
