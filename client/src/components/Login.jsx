@@ -22,7 +22,7 @@ class Login extends Component {
 		return (
 			<div className='form' >
 			<form>
-			<h1>Login {this.state.status}</h1>
+			<h1>Login</h1>
 				<label>Username </label>
 					<input 
 						type='text' 
