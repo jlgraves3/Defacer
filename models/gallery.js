@@ -37,4 +37,16 @@ Gallery.delete = id => {
 	`,[id]);
 }
 
+Gallery.update = (artwork,id) => {
+	return db.one(`
+		UPDATE gallery SET 
+			user_id = $1,
+			title = $2,
+			painting_src = $3,
+			canvas_src = $4
+			WHERE id = $5
+		RETURNING *
+	`,[artwork.user_id,artwork.title,artwork.painting_src,artwork.canvas_src],id)
+}
+
 module.exports = Gallery;
