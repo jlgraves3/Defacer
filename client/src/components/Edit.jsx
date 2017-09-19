@@ -91,7 +91,7 @@ class Edit extends Component {
 		} 
 	}
 
-	saveChanges() {
+	saveChanges(action) {
 		const canvas_src = document.getElementsByClassName('canvas')[0].toDataURL();
 		const artwork = {
 			title: this.state.title,
@@ -99,12 +99,28 @@ class Edit extends Component {
 			painting_src: this.state.painting_src,
 			canvas_src: canvas_src
 		}
-		axios.put(`/gallery/${this.props.id}`,artwork)
-		.then(res => {
-			this.setState({
-				redirect: true,
-			});
-		}).catch(err => console.log(err));
+		if (action === 'put') {
+				axios.put(`/gallery/${this.props.id}`,artwork)
+				.then(res => {
+					this.setState({
+						redirect: true,
+					});
+				}).catch(err => console.log(err));
+			} 
+		else if (action === 'post') {
+				axios.post('/gallery', artwork)
+				.then(res => {
+					this.setState({
+						redirect: true,
+					});
+				}).catch(err => {
+					console.log(err);
+					this.setState({
+						redirect: true,
+					});
+				});
+		}
+	
 	}
 
 	//renders canvas tools and save/discard buttons
@@ -135,14 +151,15 @@ class Edit extends Component {
 							size: parseInt(e.target.value)
 						})} />
 				</div>
-				<button onClick={this.saveChanges}>Save Changes</button>
+				<button onClick={() => this.saveChanges('put')}>Save Changes</button>
+				<button onClick={() => this.saveChanges('post')}>Save As New</button>
 			</div>
 		)
 	}
 
 	render() {
 		if (this.state.redirect) {
-			return <Redirect to='/gallery' />
+			return <Redirect to='/profile' />
 		}		
 		return(
 			<div>
