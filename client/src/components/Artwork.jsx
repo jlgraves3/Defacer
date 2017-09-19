@@ -25,7 +25,7 @@ class Artwork extends Component {
 	userOptions() {
 		if (this.props.loggedIn && this.state.artwork.user_id === this.props.user.id) {
 			return (
-				<div className='inline-buttons'>
+				<div className='crud-buttons'>
 					<button>Edit</button>
 					<button onClick={() => this.props.handleDelete(this.props.match.params.id)}>Delete</button>
 				</div>
