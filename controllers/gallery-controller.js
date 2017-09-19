@@ -39,10 +39,12 @@ galleryController.create = (req,res) => {
 		title: req.body.title,
 		painting_src: req.body.painting_src,
 		canvas_src: req.body.canvas_src
-	}).then(res => {
-		res.direct('/');
-	})
-	.catch(err => console.log(err));
+	}).then(artwork => {
+		res.json({
+			message: 'successfully added',
+			data: artwork,
+		});
+	}).catch(err => console.log(err));
 }
 
 galleryController.destroy = (req,res) => {
