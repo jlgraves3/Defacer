@@ -30,6 +30,7 @@ class App extends Component {
     }
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
   }
 
@@ -40,13 +41,12 @@ class App extends Component {
       username,
       password,
     }).then(res => {
-      console.log(res.data);
       this.setState({
         user: res.data.user,
         loggedIn: true,
         redirect: true,
         path: '/profile',
-      })
+      });
     }).catch(err => console.log(err));
   }
 
@@ -58,6 +58,19 @@ class App extends Component {
         loggedIn: false,
         redirect: true,
         path: '/',
+      });
+    }).catch(err => console.log(err));
+  }
+
+  handleRegister(e, username, password) {
+    e.preventDefault();
+    axios.post('/auth/register', {
+      username,
+      password,
+    }).then(res => {
+      this.setState({
+        redirect: true,
+        path: '/login',
       });
     }).catch(err => console.log(err));
   }
@@ -80,7 +93,7 @@ class App extends Component {
         <Route exact path="/" render={() => <Home 
           loggedIn={this.state.loggedIn} 
           user={this.state.user}/>} />
-        <Route exact path="/register" component={Register} />
+        <Route exact path="/register" render={() => <Register handleRegister={this.handleRegister} />} />
         <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin}/>} />
         <Route exact path="/gallery"  component={Gallery} />
         <Route exact path="/gallery/:id" component={Artwork} />
