@@ -32,6 +32,7 @@ class Artists extends Component {
 				'camille-pissarro',
 				'paul-gauguin',
 				'mary-cassatt',
+				'gilbert-stuart',
 			],
 			artistData: [],
 			artistDataLoaded: false,
@@ -42,8 +43,8 @@ class Artists extends Component {
 		this.renderHelper = this.renderHelper.bind(this);
 	}
 
-	componentWillMount() {
-		console.log('will mount');
+	componentDidMount() {
+		console.log('did mount');
 		const artistData = [];
 		this.state.artists.sort().forEach(artist => {
 			axios.get(`/artists/${artist}`)
