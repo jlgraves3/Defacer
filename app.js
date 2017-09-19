@@ -36,7 +36,7 @@ app.listen(PORT, () => {
 
 //index route
 app.get('/', (req,res) => {
-	res.send('hello world');
+	res.sendFile(path.join(__dirname, 'client','build', 'index.html'));
 });
 
 
