@@ -46,7 +46,7 @@ Gallery.update = (artwork,id) => {
 			canvas_src = $4
 			WHERE id = $5
 		RETURNING *
-	`,[artwork.user_id,artwork.title,artwork.painting_src,artwork.canvas_src],id)
+	`,[artwork.user_id,artwork.title,artwork.painting_src,artwork.canvas_src,id])
 }
 
 module.exports = Gallery;
