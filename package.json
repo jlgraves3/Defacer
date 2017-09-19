@@ -7,8 +7,7 @@
     "start": "node app.js",
     "deploy": "cd client && yarn build && cp -a ./build/ ../public/",
     "dev": "nodemon app.js",
-    "debugger": "DEBUG=*.* nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "debugger": "DEBUG=*.* nodemon app.js"
   },
   "repository": {
     "type": "git",
