@@ -1,30 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { Redirect } from 'react-router';
 
 class Register extends Component {
 	constructor() {
 		super();
 		this.state = {
-			username: null,
-			password: null,
+			username: '',
+			password: '',
 		}
-		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-	}
-
-	handleSubmit(e) {
-		e.preventDefault();
-		let user = {
-			username: this.state.username,
-			password: this.state.password
-		}
-		console.log(user)
-		axios.post('/auth/register', {
-			username: this.state.username,
-			password: this.state.password
-		}).then(res => {
-			console.log(res.data);
-		}).catch(err => console.log(err));
 	}
 
 	handleChange(e) {
@@ -36,26 +20,39 @@ class Register extends Component {
 
 	render() {
 		return (
-			<div className='form'>
+			<div className='form' >
+			<form>
 			<h1>Register</h1>
-			<form onSubmit={(e) => this.handleSubmit(e)}>
-				<label>Username: </label>
-				<input 
-					type='text' 
-					name='username' 
-					value={this.state.username}
-					onChange={this.handleChange} />
-				<label>Password: </label>
+				<label>Username </label>
+					<input 
+						type='text' 
+						name='username' 
+						value={this.state.username}
+						onChange={this.handleChange} 
+						placeholder='username'
+						required />
+				<label>Password </label>
 					<input 
 						type='password' 
 						name='password'
 						value={this.state.password}
-						onChange={this.handleChange} />
-					<button type='submit'>Register</button>
+						onChange={this.handleChange} 
+						placeholder='password'
+						required />
+				<button type='submit' 
+					onClick={(e) => {
+							this.props.handleRegister(e,this.state.username,this.state.password)
+							this.setState({
+								redirect: true,
+							});
+						}
+					} >Login</button>
 			</form>
 			</div>
+
 		)
 	}
+
 }
 
 export default Register;
