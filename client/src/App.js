@@ -34,7 +34,6 @@ class App extends Component {
     this.handleRegister = this.handleRegister.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleEditPage = this.handleEditPage.bind(this);
   }
 
 //help from Dan Beebe
@@ -97,14 +96,6 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
-  handleEditPage(artwork,id) {
-    this.setState({
-      artwork: artwork,
-      redirect: true,
-      path: `/edit/${id}`
-    });
-  }
-
   render() {
     return (
       <Router>
@@ -121,10 +112,8 @@ class App extends Component {
           <Artwork {...props} 
           loggedIn={this.state.loggedIn} 
           user={this.state.user}
-          handleDelete={this.handleDelete} 
-          handleEditPage={this.handleEditPage} /> 
+          handleDelete={this.handleDelete} /> 
         } />
-        <Route exact path="/edit/:id" render={(props) => <Edit artwork={this.state.artwork}/>} />
         <Route exact path="/profile" render={() => <Profile loggedIn={this.state.loggedIn} user={this.state.user} />} />
         </div>
       </Router>
