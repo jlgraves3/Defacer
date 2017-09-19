@@ -18,7 +18,7 @@ nav a {
   margin: 0 20px;
 }
 
-nav a:hover {
+nav a:hover,button:hover {
   text-decoration: line-through;
   cursor: pointer;
 }
@@ -52,10 +52,6 @@ h4 {
 
 h5 {
   font-weight: normal;
-}
-
-button:hover {
-  cursor: pointer;
 }
 
 .thumbnail {
@@ -139,15 +135,6 @@ header {
   border: 1px solid black;
 }
 
-.crud-buttons button:hover {
-
-}
-
-.long {
-  background-color: orange;
-  width: 300px;
-}
-
 canvas {
   position: absolute;
   left: 0;
@@ -182,11 +169,14 @@ canvas {
   margin-right: 10px;
   margin-bottom: 10px; 
 }
-/*
-#logo {
-  font-family: 'Baskerville';
-  text-transform: none;
-}*/
+
+.options button:hover {
+  background-color: white;
+  color: black;
+  box-shadow: inset 1px 1px black;
+  text-decoration: none;
+  transition: 0.5s;
+}
 
 #logo:after {
   content: 'Defacer'
@@ -238,6 +228,11 @@ input[type='color'] {
   width: 40px;
   height: 25px;
 } 
+
+input[type='range'] {
+  background-color: green;
+  width: 80%;
+}
 
 label {
   margin-top: 10px;
