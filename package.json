@@ -37,5 +37,8 @@
     "pg-promise": "^6.5.4",
     "superagent": "^3.6.0",
     "traverson": "^6.0.3"
+  },
+  "engines": {
+    "node": "8.1.2"
   }
 }
