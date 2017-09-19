@@ -3,10 +3,6 @@ import axios from 'axios';
 import Works from './Works';
 import Loading from './Loading';
 
-import {
-  Link
-} from 'react-router-dom';
-
 class Artists extends Component {
 	constructor() {
 		super();

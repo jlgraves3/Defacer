@@ -5,9 +5,6 @@ import axios from 'axios';
 import {
 	SketchPad, 
 	TOOL_PENCIL, 
-	TOOL_LINE, 
-	TOOL_RECTANGLE, 
-	TOOL_ELLIPSE
 } from 'react-sketchpad/lib';
 
 	

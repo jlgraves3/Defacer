@@ -9,13 +9,11 @@ import Home from './components/Home';
 import Gallery from './components/Gallery';
 import Artwork from './components/Artwork';
 import Profile from './components/Profile';
-import Edit from './components/Edit';
 
 import { Redirect } from 'react-router';
 import {
   BrowserRouter as Router,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
 
 

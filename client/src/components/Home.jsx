@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Artists from './Artists';
-import Works from './Works';
 import Canvas from './Canvas';
-import axios from 'axios';
 
 class Home extends Component {
   constructor() {
