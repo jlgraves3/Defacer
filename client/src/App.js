@@ -10,6 +10,8 @@ import Gallery from './components/Gallery';
 import Artwork from './components/Artwork';
 import Profile from './components/Profile';
 
+import { Redirect } from 'react-router';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -24,8 +26,11 @@ class App extends Component {
       user: null,
       loggedIn: false,
       redirect: false,
+      path: null,
     }
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleRedirect = this.handleRedirect.bind(this);
   }
 
 //help from Dan Beebe
@@ -40,6 +45,7 @@ class App extends Component {
         user: res.data.user,
         loggedIn: true,
         redirect: true,
+        path: '/profile',
       })
     }).catch(err => console.log(err));
   }
@@ -51,23 +57,34 @@ class App extends Component {
         user: null,
         loggedIn: false,
         redirect: true,
+        path: '/',
       });
     }).catch(err => console.log(err));
   }
 
+  handleRedirect() {
+    if (this.state.redirect) {
+      this.setState({
+        redirect: false,
+      });
+      return <Redirect to={this.state.path} />
+    }
+  }
 
   render() {
     return (
       <Router>
         <div className="App">
-        <Nav loggedIn={this.state.loggedIn} user={this.state.user} />
-        <Route exact path="/" render={() => <Home loggedIn={this.state.loggedIn} user={this.state.user}/>} />
+        {this.handleRedirect()}
+        <Nav loggedIn={this.state.loggedIn} user={this.state.user} handleLogout={this.handleLogout}/>
+        <Route exact path="/" render={() => <Home 
+          loggedIn={this.state.loggedIn} 
+          user={this.state.user}/>} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin} redirect={this.state.redirect}/>} />
+        <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin}/>} />
         <Route exact path="/gallery"  component={Gallery} />
         <Route exact path="/gallery/:id" component={Artwork} />
         <Route exact path="/profile" render={() => <Profile loggedIn={this.state.loggedIn} user={this.state.user} />} />
-
         </div>
       </Router>
     );
