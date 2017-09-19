@@ -14,7 +14,7 @@ require('dotenv').config();
 
 //middlewares
 app.use(logger('dev'));
-app.use(express.static('public'));
+app.use(express.static('client/build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //auth middlewares
