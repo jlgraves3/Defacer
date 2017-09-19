@@ -44,6 +44,17 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
+  handleLogout() {
+    axios.get('/auth/logout')
+    .then(res => {
+      this.setState({
+        user: null,
+        loggedIn: false,
+        redirect: true,
+      });
+    }).catch(err => console.log(err));
+  }
+
 
   render() {
     return (
