@@ -9,6 +9,7 @@ class Artwork extends Component {
 			artwork: null,
 			artworkLoaded: false,
 		}
+		this.userOptions = this.userOptions.bind(this);
 	}
 
 	componentWillMount() {
@@ -21,6 +22,17 @@ class Artwork extends Component {
 		}).catch(err => console.log(err));
 	}
 
+	userOptions() {
+		if (this.props.loggedIn && this.state.artwork.user_id === this.props.user.id) {
+			return (
+				<div className='inline-buttons'>
+					<button>Edit</button>
+					<button onClick={() => this.props.handleDelete(this.state.artwork.id)}>Delete</button>
+				</div>
+			)
+		}
+	}
+
 	render() {
 		if (this.state.artworkLoaded) {
 			const artwork = this.state.artwork;
@@ -29,6 +41,7 @@ class Artwork extends Component {
 				<Link to='/gallery' className='back'>Back</Link>
 					<h1>{artwork.title || 'Untitled'}</h1>
 					<h2>{artwork.username}</h2>
+					{this.userOptions()}
 					<div className='artwork-single'>
 						<img src={artwork.painting_src} />
 						<img src={artwork.canvas_src} />
