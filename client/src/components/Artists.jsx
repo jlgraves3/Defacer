@@ -22,7 +22,6 @@ class Artists extends Component {
 				'edouard-manet',
 				'sandro-botticelli',
 				'winslow-homer',
-				//'auguste-rodin',
 				'paul-cezanne',
 				'el-greco',
 				'peter-paul-rubens',
@@ -30,6 +29,7 @@ class Artists extends Component {
 				'paul-gauguin',
 				'mary-cassatt',
 				'gilbert-stuart',
+				'artemisia-gentileschi',
 			],
 			artistData: [],
 			artistDataLoaded: false,
@@ -38,6 +38,7 @@ class Artists extends Component {
 		this.renderArtist = this.renderArtist.bind(this);
 		this.toggleArtist = this.toggleArtist.bind(this);
 		this.renderHelper = this.renderHelper.bind(this);
+		this.introDiv = this.introDiv.bind(this);
 	}
 
 	componentDidMount() {
@@ -91,10 +92,18 @@ class Artists extends Component {
 		}
 	}
 
+	introDiv() {
+		return (
+			<header>
+				<h1>Pick an artist. Deface their work.</h1>
+			</header>
+			)
+	}
+
 	render() {
 		return (
 			<div>
-				{this.state.selectedArtist ? '' : <h1>Artists</h1>}
+				{this.state.selectedArtist ? '' : this.introDiv()}
 				{this.state.artistDataLoaded ? this.renderHelper() : <Loading />}
 			</div>
 		)

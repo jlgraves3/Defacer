@@ -369,6 +369,24 @@ a.back:hover, .crud-buttons button:hover {
   animation: 2.5s spin linear infinite;
 }
 
+header {
+  text-align: center;
+}
+header h1 {
+  font-size: 28px;
+  margin: 20px auto;
+}
+
+#empty {
+  margin: 50px;
+  color: gray;
+  width: 100vw;
+  text-align: center;
+}
+
+#empty span {
+  text-decoration: underline;
+}
 
 @keyframes spin {
   0% {

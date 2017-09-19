@@ -68,10 +68,8 @@ class App extends Component {
       username,
       password,
     }).then(res => {
-      this.setState({
-        redirect: true,
-        path: '/login',
-      });
+      //log in registered user
+      this.handleLogin(e,username,password);
     }).catch(err => console.log(err));
   }
 

@@ -12,6 +12,7 @@ class Profile extends Component {
 			userArtworksLoaded: false,
 		}
 		this.renderArtwork = this.renderArtwork.bind(this);
+		this.renderHelper = this.renderHelper.bind(this);
 	}
 
 	componentWillMount() {
@@ -41,6 +42,19 @@ class Profile extends Component {
 		)
 	}
 
+	renderHelper() {
+		if (this.state.userArtworks.length) {
+			return this.state.userArtworks.map(this.renderArtwork) 
+		} else {
+			return (
+				<div id='empty'>
+					<p>You do not have any artworks yet. <span><Link to='/'>Start Defacing.</Link></span></p>
+				</div>
+				)
+		}
+			
+	}
+
 	render() {
 		if (!this.props.loggedIn) {
 			return <Redirect to='/login' />
@@ -50,7 +64,7 @@ class Profile extends Component {
 				<h1>{this.props.user.username}</h1>
 				<h2>Your Artworks:</h2>
 				<div className='gallery-container'>
-					{this.state.userArtworksLoaded ? this.state.userArtworks.map(this.renderArtwork) :  <Loading />}
+					{this.state.userArtworksLoaded ? this.renderHelper() :  <Loading />}
 				</div>
 			</div>
 		)

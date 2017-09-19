@@ -45,7 +45,7 @@ class Register extends Component {
 								redirect: true,
 							});
 						}
-					} >Login</button>
+					} >Register</button>
 			</form>
 			</div>
 
