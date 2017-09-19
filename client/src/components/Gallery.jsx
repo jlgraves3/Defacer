@@ -12,7 +12,7 @@ class Gallery extends Component {
 		this.renderArtwork = this.renderArtwork.bind(this);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		axios.get('/gallery')
 		.then(res => {
 			this.setState({
