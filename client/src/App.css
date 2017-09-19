@@ -1,19 +1,55 @@
 body {
-  font-family: 'Roboto Condensed';
+  font-family: 'Avenir';
+  margin: 0;
+  margin-bottom: 50px;
+  height: 100vh;
 }
 
 nav {
-  background-color: black;
-  height: 40px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  font-size: 16px;
+  text-transform: uppercase;
+  margin: 0 20px;
+}
+
+nav a:hover {
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Baskerville', serif;
+  font-weight: normal;
+  font-size: 42px;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 24px;
   text-align: center;
+  font-weight: normal;
+  margin: 0;
 }
 
 h3 {
-  font-size: 16px;
+  font-size: 13px;
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+h5 {
+  font-weight: normal;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .thumbnail {
@@ -45,18 +81,25 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin: 20px;
+  margin: 5px 20px;
   flex-wrap: wrap;
 }
 .artist {
   width: 20vw;
 }
 
+.artist:hover,.artwork:hover {
+  cursor: pointer;
+}
+.artist:hover h3, .artwork:hover h3{
+  text-decoration: line-through;
+}
+.artist img, .artwork img {
+  width: 100%;
+}
+
 .artwork {
   width: 25vw;
-}
-.artwork img {
-  width: 100%;
 }
 
 #sketch-container {
@@ -73,28 +116,56 @@ header {
   height: auto;
 }
 
+
+
 canvas {
   position: absolute;
   left: 0;
-  z-index: 5;
   width: 100%;
+  z-index: 10;
 }
 
 .options {
   float: right;
-  background-color: #EEEEEE;
   margin: 0 20px;
   padding: 20px;
   width: 20vw;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   font-weight: bold;
+  border: 1px solid black;
+  height: 300px;
 }
+
 
 .options div, .options button {
   margin: 5px 0;
 }
+
+.options div {
+  display: flex;
+  align-items: center;
+}
+
+.options label {
+  margin-right: 10px;
+  margin-bottom: 10px; 
+}
+/*
+#logo {
+  font-family: 'Baskerville';
+  text-transform: none;
+}*/
+
+#logo:after {
+  content: 'Defacer'
+}
+
+#logo:hover:after {
+  content: 'D$F%C#R';
+}
+
 
 .form {
   text-align: center;
@@ -103,16 +174,40 @@ canvas {
 .form form {
   display: flex;
   flex-direction: column;
-  background-color: lightgray;
+  border: 1px solid black;
   padding: 20px;
   align-items: center;
   width: 350px;
-  margin: auto;
+  margin: 40px auto;
+}
+
+.inline-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inline-buttons button {
+  width: 45%;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
 }
 
 input {
   padding: 5px;
+  border: 1px solid black;
+  font-weight: 500;
 }
+
+input[type='color'] {
+  background-color: rgba(0,0,0,0);
+  border: 0px solid black;
+  border-radius: 15px;
+  padding: 0;
+  -webkit-appearance: none;
+  width: 40px;
+  height: 25px;
+} 
 
 label {
   margin-top: 10px;
@@ -121,15 +216,109 @@ label {
 
 button {
   margin: 10px auto;
-  padding: 10px;
-  border-radius: 10px; 
+  padding: 8px;
   width: auto;
-  background-color: white;
-  border: 2px solid black;
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 14px;
+  font-family: 'Avenir';
+  text-transform: lowercase;
 }
 
+.gallery-work {
+  width: 20vw;
+  position: relative;
+  margin: 10px;
+  height: 30vw;
+}
+
+.gallery-work img {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: auto;
+  left: 0;
+}
+
+.gallery-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 90vw;
+  margin: auto;
+}
+
+.gallery-work:hover .overlay {
+  opacity: 1;
+  transition: 0.5s;
+}
 
 a {
-  color: white;
+  color: black;
   text-decoration: none;
+}
+
+input[name='title'] {
+  font-size: 28px;
+  margin: 20px 50px;
+  color: black;
+}
+
+.artwork-single img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;  
+}
+
+.artwork-single {
+  background-color: green;
+  margin: 30px auto;
+  position: relative;
+  left: 0;
+  width: 60vw;
+}
+
+.single {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  background-color: black;
+  color: white;
+  text-align: left;
+  padding: 15px;
+  opacity: 0;
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  width: 60%;
+  float: center;
+}
+
+h4,h5 {
+  margin: 0;
+}
+
+.back {
+  font-size: 14px;
+  padding: 2px 8px;
+  position: absolute;
+  top: 90px;
+  left: 30px;
+  text-align: left;
+  background-color: black; 
+}
+
+a.back {
+  color: white;
+}
+a.back:hover {
+  text-decoration: line-through;
 }
