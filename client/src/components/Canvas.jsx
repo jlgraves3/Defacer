@@ -105,8 +105,10 @@ class Canvas extends Component {
 	tools() {
 		return(
 			<div className='options'>
-				<button onClick={this.props.discard}>Discard</button>
-				<button onClick={this.clearCanvas}>Reset</button>
+				<div className='inline-buttons'>
+					<button onClick={this.props.discard}>Discard</button>
+					<button onClick={this.clearCanvas}>Reset</button>
+				</div>
 				<div>
 					<label>color </label>
 					<input 
@@ -144,7 +146,7 @@ class Canvas extends Component {
 						<input 
 							type='text'
 						 	name='title'
-							placeholder={`${this.props.artwork.title} v2`} 
+							placeholder="Untitled" 
 							value={this.state.title} 
 							onChange={this.handleInputChange} />
 						<div id='sketch-container' width={this.state.width} height={this.state.height}>
@@ -158,9 +160,7 @@ class Canvas extends Component {
 										items={[]} />
 								: ''}
 							</div>
-						{this.tools()}
-						<div>
-						</div>
+							{this.tools()}
 					</div>
 				)
 			}
