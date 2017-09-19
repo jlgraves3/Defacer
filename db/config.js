@@ -12,6 +12,4 @@ if (process.env.NODE_ENV === 'development' || !process.env.development) {
 	db = pgp(process.env.DATABASE_URL);
 }
 
-const db = setDatabase();
-
 module.exports = db;
