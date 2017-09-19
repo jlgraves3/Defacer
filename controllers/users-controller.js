@@ -7,10 +7,10 @@ const usersController = {};
 usersController.create = (req,res) => {
 	//encrypt password
 	const salt = bcrypt.genSaltSync();
-	const hash = bcrypt.hashSync(req.body.options.password, salt);
+	const hash = bcrypt.hashSync(req.body.password, salt);
 	//add to database
 	User.create({
-		username: req.body.options.username,
+		username: req.body.username,
 		password_digest: hash
 	}).then(user => {
 		req.login(user, (err) => {
