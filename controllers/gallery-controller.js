@@ -56,5 +56,22 @@ galleryController.destroy = (req,res) => {
 	}).catch(err => console.log(err));
 }
 
+galleryController.update = (req,res) => {
+	const artwork = {
+		user_id: req.body.user_id,
+		title: req.body.title,
+		painting_src: req.body.painting_src,
+		canvas_src: req.body.canvas_src,
+	};
+	Gallery.update(artwork, req.params.id)
+		.then(updated => {
+			res.json({
+				message: 'updated successfully',
+				data: updated
+			});
+		}).catch(err => console.log(err));
+	}
+}
+
 
 module.exports = galleryController;
