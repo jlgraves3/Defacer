@@ -25,24 +25,28 @@ class Edit extends Component {
 			title: '',
 			painting_src: '',
 			canvas_src: '',
+			user_id: '',
 			redirect: false,
 			canvasLoaded: false,
+			message: '',
 		}
 		this.tools = this.tools.bind(this);
-		//this.updateCanvas = this.updateCanvas.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.getDimensions = this.getDimensions.bind(this);
 		this.initCanvas = this.initCanvas.bind(this);
 		this.initSketchPad = this.initSketchPad.bind(this);
 		this.clearCanvas = this.clearCanvas.bind(this);
+		this.saveChanges = this.saveChanges.bind(this);
 	}
 
 	componentWillMount() {
 		console.log('will mount');
+		console.log(this.props);
 		this.setState({
 			title: this.props.artwork.title,
 			painting_src: this.props.artwork.painting_src,
 			canvas_src: this.props.artwork.canvas_src,
+			user_id: this.props.artwork.user_id,
 		});
 	}
 
@@ -87,7 +91,21 @@ class Edit extends Component {
 		} 
 	}
 
-	
+	saveChanges() {
+		const canvas_src = document.getElementsByClassName('canvas')[0].toDataURL();
+		const artwork = {
+			title: this.state.title,
+			user_id: this.state.user_id,
+			painting_src: this.state.painting_src,
+			canvas_src: canvas_src
+		}
+		axios.put(`/gallery/${this.props.id}`,artwork)
+		.then(res => {
+			this.setState({
+				redirect: true,
+			});
+		}).catch(err => console.log(err));
+	}
 
 	//renders canvas tools and save/discard buttons
 	tools() {
@@ -117,7 +135,7 @@ class Edit extends Component {
 							size: parseInt(e.target.value)
 						})} />
 				</div>
-				<button onClick={this.saveCanvas}>Save Changes</button>
+				<button onClick={this.saveChanges}>Save Changes</button>
 			</div>
 		)
 	}
