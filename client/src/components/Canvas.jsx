@@ -124,7 +124,7 @@ class Canvas extends Component {
 						})} />
 				</div>
 				<button onClick={this.saveCanvas}>Save to Gallery</button>
-				<p className='error'>{this.state.error}</p>
+				<p className='error'>{this.state.message}</p>
 			</div>
 		)
 	}
@@ -133,7 +133,6 @@ class Canvas extends Component {
 		if (this.state.redirect) {
 			return <Redirect to='/gallery' />
 		}
-		//const src= this.props.artwork._links.image.href.replace("{image_version}","large");
 		else {
 				return(
 					<div>
