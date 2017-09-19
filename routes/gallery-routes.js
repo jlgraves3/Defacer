@@ -8,6 +8,7 @@ galleryRoutes.get('/:id', galleryController.show);
 galleryRoutes.get('/user/:user_id', galleryController.showUser);
 
 galleryRoutes.post('/', galleryController.create);
+galleryRoutes.put('/:id',galleryController.update;
 
 galleryRoutes.delete('/:id', galleryController.destroy);
 
