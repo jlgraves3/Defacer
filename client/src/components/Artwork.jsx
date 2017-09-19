@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Loading from './Loading';
+import Edit from './Edit';
 
 class Artwork extends Component {
 	constructor() {
@@ -9,8 +10,10 @@ class Artwork extends Component {
 		this.state = {
 			artwork: null,
 			artworkLoaded: false,
+			edit: false,
 		}
 		this.userOptions = this.userOptions.bind(this);
+		this.toggleEdit = this.toggleEdit.bind(this);
 	}
 
 	componentWillMount() {
@@ -23,11 +26,17 @@ class Artwork extends Component {
 		}).catch(err => console.log(err));
 	}
 
+	toggleEdit() {
+		this.setState((prevstate,props) => {
+			return {edit: !prevstate.edit}
+		});
+	}
+
 	userOptions() {
 		if (this.props.loggedIn && this.state.artwork.user_id === this.props.user.id) {
 			return (
 				<div className='crud-buttons'>
-					<button>Edit</button>
+					<button onClick={() => this.setState(this.toggleEdit)}>Edit</button>
 					<button onClick={() => this.props.handleDelete(this.props.match.params.id)}>Delete</button>
 				</div>
 			)
@@ -37,6 +46,12 @@ class Artwork extends Component {
 	render() {
 		if (this.state.artworkLoaded) {
 			const artwork = this.state.artwork;
+			if (this.state.edit) {
+				return <Edit 
+					toggleEdit={this.toggleEdit} 
+					artwork={artwork} 
+					id={this.props.match.params.id} />
+			}
 			return (
 				<div className='single'>
 				<Link to='/gallery' className='back'>Back</Link>
