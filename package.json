@@ -27,13 +27,11 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
-    "jwks-rsa": "^1.2.0",
     "method-override": "^2.3.9",
     "morgan": "^1.8.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "pg-promise": "^6.5.4",
-    "superagent": "^3.6.0"
+    "pg-promise": "^6.5.4"
   },
   "engines": {
     "node": "8.1.2"
