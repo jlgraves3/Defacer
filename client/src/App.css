@@ -18,7 +18,7 @@ nav a {
   margin: 0 20px;
 }
 
-nav a:hover,button:hover {
+nav a:hover {
   text-decoration: line-through;
   cursor: pointer;
 }
@@ -71,6 +71,28 @@ header {
   margin: 0 30px;
 }
 
+button {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  width: auto;
+  margin: 10px auto;
+  padding: 8px;
+  font-size: 14px;
+  font-family: 'Avenir';
+  text-transform: lowercase;
+}
+
+button:hover {
+  box-shadow: inset 2px 2px black;
+  transition: 0.4s;
+}
+
+button[type='submit'] {
+  width: 80px;
+  margin: 20px;
+}
+
 .container {
   margin: auto;
   display: flex;
@@ -90,10 +112,10 @@ header {
   width: 20vw;
 }
 
-.artist:hover,.artwork:hover {
+.artist:hover,.artwork:hover, button:hover {
   cursor: pointer;
 }
-.artist:hover h3, .artwork:hover h3{
+.artist:hover h3, .artwork:hover h3, a.back:hover{
   text-decoration: line-through;
 }
 .artist img, .artwork img {
@@ -106,7 +128,7 @@ header {
 
 #sketch-container {
   position: relative;
-  width: 600px;
+  width: 60vw;
   left: 50px;
 }
 
@@ -128,11 +150,8 @@ header {
   top: 210px;
 }
 
-.crud-buttons button{
+.crud-buttons button {
   width: 80px;
-  background-color: white;
-  color: black;
-  border: 1px solid black;
 }
 
 canvas {
@@ -154,7 +173,6 @@ canvas {
   border: 1px solid black;
   height: 300px;
 }
-
 
 .options div, .options button {
   margin: 5px 0;
@@ -186,7 +204,6 @@ canvas {
   content: 'D$F%C#R';
 }
 
-
 .form {
   text-align: center;
 }
@@ -208,9 +225,6 @@ canvas {
 
 .inline-buttons button {
   width: 45%;
-  background-color: white;
-  color: black;
-  border: 1px solid black;
 }
 
 input {
@@ -239,17 +253,6 @@ label {
   margin-bottom: 5px;
 }
 
-button {
-  margin: 10px auto;
-  padding: 8px;
-  width: auto;
-  background-color: black;
-  color: white;
-  border: none;
-  font-size: 14px;
-  font-family: 'Avenir';
-  text-transform: lowercase;
-}
 
 .gallery-work {
   width: 20vw;
@@ -344,9 +347,6 @@ h4,h5 {
 a.back {
   color: white;
 }
-a.back:hover, .crud-buttons button:hover {
-  text-decoration: line-through;
-}
 
 .loading-container {
   width: 100vw;
@@ -369,12 +369,21 @@ a.back:hover, .crud-buttons button:hover {
   animation: 2.5s spin linear infinite;
 }
 
-header {
-  text-align: center;
+button.disabled {
+  background-color: lightgray;
+} 
+
+button.disabled:hover {
+  box-shadow: none;
+  background-color: lightgray;
+  color: white;
+  cursor: auto;
 }
-header h1 {
-  font-size: 28px;
-  margin: 20px auto;
+
+.error {
+  font-weight: normal;
+  font-size: 14px;
+  color: gray;
 }
 
 #empty {
@@ -386,6 +395,10 @@ header h1 {
 
 #empty span {
   text-decoration: underline;
+}
+
+h1.intro {
+  font-size: 28px;
 }
 
 @keyframes spin {
