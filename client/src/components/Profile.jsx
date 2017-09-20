@@ -28,6 +28,7 @@ class Profile extends Component {
 		}
 	}
 
+	//render single artwork
 	renderArtwork(artwork) {
 		return(
 			<Link to={`/gallery/${artwork.id}`} key={artwork.id}>
@@ -35,13 +36,14 @@ class Profile extends Component {
 				<div className='overlay'>
 					<h4>{artwork.title || 'Untitled'}</h4>
 				</div>
-				<img src={artwork.painting_src} />
-				<img src={artwork.canvas_src} />	
+				<img src={artwork.painting_src} alt=''/>
+				<img src={artwork.canvas_src} alt='' />	
 			</div>
 			</Link>
 		)
 	}
 
+	//renders message if user does not have any artworks, renders users artworks if not
 	renderHelper() {
 		if (this.state.userArtworks.length) {
 			return this.state.userArtworks.map(this.renderArtwork) 

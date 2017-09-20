@@ -117,10 +117,10 @@ class Canvas extends Component {
 						max='20'
 						value={this.state.size} 
 						onChange={(e) => this.setState({
-							size: parseInt(e.target.value)
+							size: parseInt(e.target.value,10)
 						})} />
 				</div>
-				<button onClick={this.saveCanvas}>Save to Gallery</button>
+				<button onClick={this.saveCanvas} className={!this.props.loggedIn ? 'disabled' : ''} >Save to Gallery</button>
 				<p className='error'>{this.state.message}</p>
 			</div>
 		)

@@ -42,8 +42,8 @@ class Artists extends Component {
 	}
 
 	componentDidMount() {
-		console.log('did mount');
 		const artistData = [];
+		//get artist data for each artist in array
 		this.state.artists.sort().forEach(artist => {
 			axios.get(`/artists/${artist}`)
 			.then(res => {
@@ -58,6 +58,7 @@ class Artists extends Component {
 		});
 	}
 
+	//deselect/select artist based on current state
 	toggleArtist(artist) {
 		if (this.state.selectedArtist === artist) {
 			this.setState({
@@ -70,20 +71,23 @@ class Artists extends Component {
 		}
 	}
 
+	//render a single artist div
 	renderArtist(artist) {
 		return(
 			<div key={artist.id} className="artist" onClick={() => this.toggleArtist(artist)}>
-				<img className='thumbnail' src={artist._links.thumbnail.href} />
+				<img className='thumbnail' src={artist._links.thumbnail.href} alt=''/>
 				<h3>{artist.name}</h3>
 			</div>
 		)
 	}
 
+	//render artists' works if there is a selected artist
 	renderHelper() {
 		if (this.state.selectedArtist) {
 			return 	<Works artist={this.state.selectedArtist} toggleArtist={this.toggleArtist} 
 			selectArtwork={this.props.selectArtwork} /> 
 		} else {
+			//renders all artists thumbnails if no artists has been selected
 			return (
 				<div className='container'>
 				{this.state.artistData.map(this.renderArtist)}
@@ -92,11 +96,10 @@ class Artists extends Component {
 		}
 	}
 
+	//renders page header
 	introDiv() {
 		return (
-			<header>
-				<h1>Pick an artist. Deface their work.</h1>
-			</header>
+				<h1 className='intro'>Pick an artist. Deface their work.</h1>
 			)
 	}
 

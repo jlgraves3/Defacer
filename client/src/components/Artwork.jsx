@@ -17,6 +17,7 @@ class Artwork extends Component {
 	}
 
 	componentWillMount() {
+		//fetch artwork data
 		axios.get(`/gallery/${this.props.match.params.id}`)
 		.then(res => {
 			this.setState({
@@ -26,12 +27,14 @@ class Artwork extends Component {
 		}).catch(err => console.log(err));
 	}
 
+	//toggle edit state
 	toggleEdit() {
 		this.setState((prevstate,props) => {
 			return {edit: !prevstate.edit}
 		});
 	}
 
+	//render edit and delete buttons if artwork belongs to user
 	userOptions() {
 		if (this.props.loggedIn && this.state.artwork.user_id === this.props.user.id) {
 			return (
@@ -59,8 +62,8 @@ class Artwork extends Component {
 					<h2>{artwork.username}</h2>
 					{this.userOptions()}
 					<div className='artwork-single'>
-						<img src={artwork.painting_src} />
-						<img src={artwork.canvas_src} />
+						<img src={artwork.painting_src} alt='' />
+						<img src={artwork.canvas_src} alt=''/>
 					</div>
 				</div>
 			)

@@ -14,6 +14,7 @@ class Gallery extends Component {
 	}
 
 	componentDidMount() {
+		//fetch artworks from gallery
 		axios.get('/gallery')
 		.then(res => {
 			this.setState({
@@ -23,6 +24,7 @@ class Gallery extends Component {
 		}).catch(err => console.log(err));
 	}
 
+	//render single artwork div
 	renderArtwork(artwork) {
 		return(
 			<Link to={`/gallery/${artwork.id}`} key={artwork.id}>
@@ -31,8 +33,8 @@ class Gallery extends Component {
 					<h4>{artwork.title || 'Untitled'}</h4>
 					<h5>{artwork.username}</h5>
 				</div>
-				<img src={artwork.painting_src} />
-				<img src={artwork.canvas_src} />	
+				<img src={artwork.painting_src} alt=''/>
+				<img src={artwork.canvas_src} alt='' />	
 			</div>
 			</Link>
 		)

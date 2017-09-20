@@ -38,7 +38,6 @@ class Edit extends Component {
 
 	componentWillMount() {
 		console.log('will mount');
-		console.log(this.props);
 		this.setState({
 			title: this.props.artwork.title,
 			painting_src: this.props.artwork.painting_src,
@@ -145,7 +144,7 @@ class Edit extends Component {
 						max='20'
 						value={this.state.size} 
 						onChange={(e) => this.setState({
-							size: parseInt(e.target.value)
+							size: parseInt(e.target.value,10)
 						})} />
 				</div>
 				<button onClick={() => this.saveChanges('put')}>Save Changes</button>
@@ -168,8 +167,8 @@ class Edit extends Component {
 					onChange={this.handleInputChange} />
 				<div id='sketch-container'>
 					{this.state.dimensionsLoaded ? this.initSketchPad() : ''}
-						<img onLoad={this.getDimensions} src={this.state.painting_src} />
-						<img onLoad={this.initCanvas} id='drawing' src={this.state.canvas_src} />
+						<img onLoad={this.getDimensions} src={this.state.painting_src} alt='' />
+						<img onLoad={this.initCanvas} id='drawing' src={this.state.canvas_src} alt='' />
 					</div>
 					{this.tools()}
 			</div>

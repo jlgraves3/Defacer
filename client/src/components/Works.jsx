@@ -13,12 +13,9 @@ class Works extends Component {
 	}
 
 	componentWillMount() {
-		console.log('will mount',this.props);
-		//const parsedName = this.props.artist.name.split(' ').join('-').replace("'","").toLowerCase();
-		console.log(`/artists/${this.props.artist.path}/works`)
+		//fetch selected artist's works and add to state
 		axios.get(`/artists/${this.props.artist.path}/works`)
 		.then(res => {
-			console.log(res.data);
 			this.setState({
 				artworks: res.data.data,
 				artworksLoaded: true,
@@ -26,10 +23,11 @@ class Works extends Component {
 		}).catch(err => console.log(err));
 	}
 
+	//render single artwork	
 	renderArtwork(artwork) {
 		return (
 			<div key={artwork.id} className='artwork' onClick={() => this.props.selectArtwork(artwork)}>
-				<img src={artwork._links.image.href.replace("{image_version}","large")} />
+				<img src={artwork._links.image.href.replace("{image_version}","large")} alt='' />
 				<h3>{artwork.title}</h3>
 			</div>
 		);

@@ -13,6 +13,12 @@ class Home extends Component {
     this.discard = this.discard.bind(this);
   }
 
+  componentWillMount() {
+    const logo = document.getElementById('logo');
+    console.log(logo);
+    //logo.addEventListener("click",this.discard);
+  }
+ 
   //set artwork to be sketched over
   selectArtwork(artwork) {
     console.log(artwork)
@@ -22,7 +28,7 @@ class Home extends Component {
     })
   }
 
-  //discard current canvas
+  //discard current canvas, go back to main page
   discard() {
     this.setState({
       currentArtwork: null,
