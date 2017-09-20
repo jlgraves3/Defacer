@@ -140,7 +140,7 @@ class Canvas extends Component {
 							value={this.state.title} 
 							onChange={this.handleInputChange} />
 						<div id='sketch-container' width={this.state.width} height={this.state.height}>
-							<img onLoad={this.getDimensions} src={this.state.painting_src} />
+							<img onLoad={this.getDimensions} src={this.state.painting_src} alt='' />
 							{this.state.dimensionsLoaded ? 
 								<SketchPad 
 										width={this.state.width} 
