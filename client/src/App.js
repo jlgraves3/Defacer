@@ -25,7 +25,6 @@ class App extends Component {
       loggedIn: false,
       redirect: false,
       path: null,
-      artwork: null,
     }
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -50,6 +49,7 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
+  //logs out current user, redirects to home
   handleLogout() {
     axios.get('/auth/logout')
     .then(res => {
@@ -62,6 +62,7 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
+  //registers user
   handleRegister(e, username, password) {
     e.preventDefault();
     axios.post('/auth/register', {
@@ -73,6 +74,7 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
+  //redirects to path if redirect is true, resets state to false. 
   handleRedirect() {
     if (this.state.redirect) {
       this.setState({
@@ -82,6 +84,7 @@ class App extends Component {
     }
   }
 
+  //delete artwork from gallery
   handleDelete(id) {
     axios.delete(`/gallery/${id}`)
     .then(() => {
