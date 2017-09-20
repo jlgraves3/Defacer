@@ -1,4 +1,3 @@
-const request = require('superagent');
 const axios = require('axios');
 
 const clientID = process.env.CLIENT_ID;
@@ -27,7 +26,6 @@ function getArtist(req,res,next) {
 }
 
 function getArtworks(req,res,next) {
-
 	axios.get(`https://api.artsy.net/api/artists/${req.params.artist}`, config)
 	.then(jsonRes => {
 		const artist_id = jsonRes.data.id;
