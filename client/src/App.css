@@ -370,14 +370,14 @@ a.back {
 }
 
 button.disabled {
-  background-color: lightgray;
+  color: lightgray;
+  border: 1px solid lightgray;
 } 
 
 button.disabled:hover {
   box-shadow: none;
-  background-color: lightgray;
-  color: white;
   cursor: auto;
+  color: lightgray;
 }
 
 .error {
