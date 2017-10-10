@@ -12,6 +12,15 @@ Favorite.findByUser = user_id => {
 		`, [user_id]);
 }
 
+Favorite.findByArtwork = gallery_id => {
+	return db.query(`
+		SELECT * FROM 
+		users JOIN favorites ON
+		favorites.user_id = users.id
+		WHERE favorites.gallery_id = $1
+		`, [gallery_id]);
+}
+
 Favorite.create = (gallery_id,user_id) {
 	return db.one(`
 		INSERT INTO favorites (gallery_id, user_id)
