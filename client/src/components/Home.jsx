@@ -12,12 +12,6 @@ class Home extends Component {
     this.selectArtwork = this.selectArtwork.bind(this);
     this.discard = this.discard.bind(this);
   }
-
-  componentWillMount() {
-    const logo = document.getElementById('logo');
-    console.log(logo);
-    //logo.addEventListener("click",this.discard);
-  }
  
   //set artwork to be sketched over
   selectArtwork(artwork) {
