@@ -30,6 +30,8 @@ class Artists extends Component {
 				'mary-cassatt',
 				'gilbert-stuart',
 				'artemisia-gentileschi',
+				'amedeo-modigliani',
+				'jan-van-eyck',
 			],
 			artistData: [],
 			artistDataLoaded: false,
