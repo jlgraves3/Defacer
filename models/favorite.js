@@ -3,6 +3,10 @@ const Favorite = {};
 
 
 //finds all artworks user has favorited
+Favorite.findAll = () => {
+	return db.query(`SELECT * FROM favorites`);
+}
+
 Favorite.findByUser = user_id => {
 	return db.query(`
 		SELECT * FROM 
@@ -21,7 +25,7 @@ Favorite.findByArtwork = gallery_id => {
 		`, [gallery_id]);
 }
 
-Favorite.create = (gallery_id,user_id) {
+Favorite.create = (gallery_id,user_id) => {
 	return db.one(`
 		INSERT INTO favorites (gallery_id, user_id)
 		VALUES ($1,$2)
@@ -29,7 +33,7 @@ Favorite.create = (gallery_id,user_id) {
 	`,[gallery_id,user_id]);
 } 
 
-Favorite.delete = (gallery_id,user_id) {
+Favorite.delete = (gallery_id,user_id) => {
 	return db.none(`
 		DELETE FROM favorites WHERE
 		gallery_id = $1 AND
