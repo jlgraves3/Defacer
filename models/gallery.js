@@ -1,16 +1,36 @@
 const db = require('../db/config');
+
 const Gallery = {};
 
 Gallery.findAll = () => {
-	return db.query(`SELECT gallery.id, username,user_id, title, painting_src, canvas_src FROM gallery 
-		JOIN users ON gallery.user_id = users.id
+	return db.query(`
+		SELECT 
+			gallery.id, 
+			users.username,
+			gallery.user_id, 
+			gallery.title, 
+			gallery.painting_src, 
+			gallery.canvas_src,
+			COUNT(favorites.user_id) 
+		FROM gallery JOIN users 
+		ON gallery.user_id = users.id
+		FULL JOIN favorites 
+		ON gallery.id = favorites.gallery_id
+		GROUP BY users.username, gallery.id
 		ORDER BY gallery.id DESC`);
 }
 
 Gallery.findById = id => {
 	return db.oneOrNone(`
-		SELECT * FROM gallery 
-		JOIN users ON gallery.user_id = users.id
+		SELECT 
+			gallery.id,
+			gallery.user_id,
+			gallery.title,
+			gallery.painting_src,
+			gallery.canvas_src,
+			users.username
+		FROM gallery JOIN users 
+		ON gallery.user_id = users.id
 		WHERE gallery.id = $1
 	`,[id]);
 }
