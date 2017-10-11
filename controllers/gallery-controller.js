@@ -1,6 +1,8 @@
 const Gallery = require('../models/gallery');
+const Favorite = require('../models/favorite');
 
 const galleryController = {};
+
 
 galleryController.index = (req,res) => {
 	Gallery.findAll()
@@ -15,10 +17,14 @@ galleryController.index = (req,res) => {
 galleryController.show = (req,res) => {
 	Gallery.findById(req.params.id)
 	.then(artwork => {
-		res.json({
-			message: 'ok',
-			data: artwork,
-		});
+		Favorite.findByArtwork(req.params.id)
+		.then(users => {
+			artwork.favorites = users;
+			res.json({
+				message: 'ok',
+				data: artwork,
+			});
+		}).catch(err => console.log(err));
 	}).catch(err => console.log(err));
 }
 
@@ -72,5 +78,35 @@ galleryController.update = (req,res) => {
 			});
 		}).catch(err => console.log(err));
 }
+
+galleryController.favorite = (req,res) => {
+	Favorite.create(req.params.id, req.user.id)
+	.then(favorite => {
+		res.json({
+			message: 'successfully favorited',
+			data: favorite
+		});
+	}).catch(err => console.log(err));
+}
+
+galleryController.unfavorite = (req,res) => {
+	Favorite.delete(req.params.id, req.user.id)
+	.then(() => {
+		res.json({
+			message: 'successfully unfavorited',
+		});
+	}).catch(err => console.log(err));
+}
+
+galleryController.showUserFavorites = (req,res) => {
+	Favorite.findByUser(req.params.user_id)
+	.then(artworks => {
+		res.json({
+			message: 'ok',
+			data: artworks,
+		});
+	}).catch(err => console.log(err));
+}
+
 
 module.exports = galleryController;
