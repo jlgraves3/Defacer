@@ -43,6 +43,7 @@ class App extends Component {
     this.handleUserFavorites = this.handleUserFavorites.bind(this);
     this.handleArtworkFavorites = this.handleArtworkFavorites.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
+    this.displayMessage = this.displayMessage.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +76,19 @@ class App extends Component {
     });
   }
 
+  displayMessage(message) {
+     this.setState({
+        displayMessage: true,
+        message: message,
+      });
+      setTimeout(() => {
+        this.setState({
+          displayMessage: false,
+          message: '',
+        });
+      }, 2000);
+  }
+
   toggleFavorite(id, component) {
     if (this.state.loggedIn) {
       var userFavorites = this.state.userFavorites;
@@ -105,16 +119,7 @@ class App extends Component {
         .catch(err => console.log(err));
       }
     } else {
-      this.setState({
-        displayMessage: true,
-        message: 'You must be logged in to favorite.',
-      });
-      setTimeout(() => {
-        this.setState({
-          displayMessage: false,
-          message: '',
-        });
-      }, 2000);
+        this.displayMessage("You must be logged in to favorite.")
     }
   }
 
@@ -189,7 +194,8 @@ class App extends Component {
         <Nav loggedIn={this.state.loggedIn} user={this.state.user} handleLogout={this.handleLogout}/>
         <Route exact path="/" render={() => <Home 
           loggedIn={this.state.loggedIn} 
-          user={this.state.user}/>} />
+          user={this.state.user}
+          displayMessage={this.displayMessage}/>} />
         <Route exact path="/register" render={() => <Register handleRegister={this.handleRegister} />} />
         <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin}/>} />
         <Route exact path="/gallery"  render={() => <Gallery 
