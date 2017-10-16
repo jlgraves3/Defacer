@@ -62,6 +62,7 @@ h5 {
   font-weight: lighter;
   font-size: 56px;
   text-align: right;
+  cursor: pointer;
 }
 
 header {
@@ -253,20 +254,46 @@ label {
   margin-bottom: 5px;
 }
 
+p {
+  z-index: 1000;
+  font-size: 18px;
+  font-family: 'Avenir';
+  color: gray;
+  position: absolute;
+  bottom: 0;
+}
+
+p i:hover {
+  color: #DF1A5F;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.favorited {
+  color: #DF1A5F;
+}
 
 .gallery-work {
   width: 20vw;
   position: relative;
+
   margin: 10px;
-  height: 30vw;
+  height: 35vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 
 .gallery-work img {
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
   height: auto;
-  left: 0;
+  max-height: 30vh;
+  overflow-y: hidden;
+  
 }
 
 .gallery-container {
@@ -277,7 +304,7 @@ label {
   margin: auto;
 }
 
-.gallery-work:hover .overlay {
+.gallery-work a:hover .overlay {
   opacity: 1;
   transition: 0.5s;
 }
