@@ -19,10 +19,8 @@ function setConfig() {
 
 function getArtists(req,res,next) {
 	setConfig();
-	console.log('GET ARTISTS')
 	axios.get('https://api.artsy.net/api/artists', config)
 	.then(jsonRes => {
-		console.log(jsonRes);
 		res.locals.data = jsonRes.data
 		next();
 	}).catch(err => console.log(err));

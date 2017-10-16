@@ -8,7 +8,6 @@ function renewToken() {
 	axios.post(`https://api.artsy.net/api/tokens/xapp_token?client_id=${clientID}&client_secret=${clientSecret}`)
 	.then(jsonRes => {
 		process.env['TOKEN'] = jsonRes.data.token;
-		console.log(process.env.TOKEN);
 	}).catch(err => console.log(err));
 }
 
