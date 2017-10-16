@@ -101,9 +101,15 @@ galleryController.unfavorite = (req,res) => {
 galleryController.showUserFavorites = (req,res) => {
 	Favorite.findByUser(req.params.user_id)
 	.then(artworks => {
+		//creates set to make accessing favorites easier on frontend
+		const favoritesObject = {};
+		artworks.forEach(artwork => favoritesObject[artwork.id] = true); 
 		res.json({
 			message: 'ok',
-			data: artworks,
+			data: {
+				list: artworks, 
+				ids: favoritesObject
+			}
 		});
 	}).catch(err => console.log(err));
 }
