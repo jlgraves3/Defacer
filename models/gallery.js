@@ -43,11 +43,12 @@ Gallery.findByUser = user_id => {
 }
 
 Gallery.create = artwork => {
-	db.one(`
-		INSERT INTO gallery	(user_id,title,painting_src,canvas_src)
+	return db.one(`
+		INSERT INTO gallery	
+		(user_id, title, painting_src, canvas_src)
 		VALUES ($1,$2,$3,$4)
 		RETURNING *
-	`,[artwork.user_id,artwork.title,artwork.painting_src,artwork.canvas_src]);
+	`,[artwork.user_id, artwork.title, artwork.painting_src, artwork.canvas_src]);
 }
 
 Gallery.delete = id => {
