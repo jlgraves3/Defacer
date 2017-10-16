@@ -1,5 +1,4 @@
 const axios = require('axios');
-const moment = require('moment');
 
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
