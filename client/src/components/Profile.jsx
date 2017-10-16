@@ -16,7 +16,6 @@ class Profile extends Component {
 	}
 
 	componentWillMount() {
-		console.log(this.props);
 		if (this.props.loggedIn) {
 			//get artworks by logged in user
 			axios.get(`/gallery/user/${this.props.user.id}`)
@@ -50,14 +49,14 @@ class Profile extends Component {
 					onClick={() => this.props.toggleFavorite(artwork.id, this)}></i> 
 					{this.props.artworkFavorites[artwork.id] > 0 ? " " + this.props.artworkFavorites[artwork.id] : ' '}</p>︎	
 			</div>
-			
 		)
 	}
 
 	//renders message if user does not have any artworks, renders users artworks if not
 	renderHelper() {
 		if (this.state.userArtworks.length) {
-			return this.state.userArtworks.map(this.renderArtwork) 
+			const sortedArtworks = this.state.userArtworks.sort((a,b) => b.id - a.id);
+			return sortedArtworks.map(this.renderArtwork) 
 		} else {
 			return (
 				<div id='empty'>

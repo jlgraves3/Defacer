@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Loading from './Loading';
 
@@ -11,6 +10,7 @@ class Gallery extends Component {
 			artworksLoaded: false,
 		}
 		this.renderArtwork = this.renderArtwork.bind(this);
+		this.sortArtworks = this.sortArtworks.bind(this);
 	}
 
 	//render single artwork div
@@ -33,12 +33,16 @@ class Gallery extends Component {
 		)
 	}
 
+	sortArtworks(artworks) {
+		return artworks.sort((a,b) => b.id - a.id);
+	}
+
 	render() {
 		return(
 			<div>
 				<h1>Gallery</h1>
 				<div className='gallery-container'>
-				{this.props.artworksLoaded ? this.props.artworks.map(this.renderArtwork) :  <Loading />}
+				{this.props.artworksLoaded ? this.sortArtworks(this.props.artworks).map(this.renderArtwork) :  <Loading />}
 				</div>
 			</div>
 		)
