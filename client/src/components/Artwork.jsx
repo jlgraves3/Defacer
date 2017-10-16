@@ -60,6 +60,10 @@ class Artwork extends Component {
 				<Link to='/gallery' className='back'>Back</Link>
 					<h1>{artwork.title || 'Untitled'}</h1>
 					<h2>{artwork.username}</h2>
+					<h2 id='likes'><i className={`${this.props.userFavorites[artwork.id] ? "fa fa-heart favorited" : "fa fa-heart-o"}`} 
+					aria-hidden="true" 
+					onClick={() => this.props.toggleFavorite(artwork.id, this)}></i> 
+					{this.props.artworkFavorites[artwork.id] > 0 ? " " + this.props.artworkFavorites[artwork.id] : ' '}</h2>
 					{this.userOptions()}
 					<div className='artwork-single'>
 						<img src={artwork.painting_src} alt='' />
