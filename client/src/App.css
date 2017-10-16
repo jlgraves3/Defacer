@@ -258,15 +258,18 @@ p {
   z-index: 1000;
   font-size: 18px;
   font-family: 'Avenir';
-  color: gray;
   position: absolute;
   bottom: 0;
 }
 
-p i:hover {
+i.fa-heart-o:hover {
   color: #DF1A5F;
   cursor: pointer;
   transition: 0.5s;
+}
+
+i:hover {
+  cursor: pointer;
 }
 
 .favorited {
@@ -428,11 +431,59 @@ h1.intro {
   font-size: 28px;
 }
 
+#message {
+  width: 100vw;
+  position: fixed;
+  top: 30vh;
+  z-index: 2000;
+  margin: auto;
+  height: 100px;
+  text-align: center;
+  animation: 2s fade linear;
+  -webkit-animation-iteration-count: 1;
+}
+#message div {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+#message h2 {
+  background-color: white;
+  border: 1px solid black;
+  box-shadow: 2px 2px 5px;
+  margin: auto;
+  font-size: 18px;
+  padding: 40px;
+}
+
+h2#likes {
+  width: 60vw;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: -20px;
+  font-size: 28px;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
