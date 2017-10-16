@@ -16,6 +16,7 @@ class Profile extends Component {
 	}
 
 	componentWillMount() {
+		console.log(this.props);
 		if (this.props.loggedIn) {
 			//get artworks by logged in user
 			axios.get(`/gallery/user/${this.props.user.id}`)
@@ -25,21 +26,31 @@ class Profile extends Component {
 					userArtworksLoaded: true,
 				});
 			}).catch(err => console.log(err));
+			//get user favorites
+			axios.get(`/gallery/user/${this.props.user.id}/favorites`)
+			.then(res => {
+				this.props.handleUserFavorites(res.data.data.ids);
+			}).catch(err => console.log(err));
 		}
 	}
 
 	//render single artwork
 	renderArtwork(artwork) {
 		return(
-			<Link to={`/gallery/${artwork.id}`} key={artwork.id}>
-			<div className='gallery-work'>
+			<div className='gallery-work' key={artwork.id}>
+			<Link to={`/gallery/${artwork.id}`}>
 				<div className='overlay'>
 					<h4>{artwork.title || 'Untitled'}</h4>
 				</div>
 				<img src={artwork.painting_src} alt=''/>
-				<img src={artwork.canvas_src} alt='' />	
+				<img src={artwork.canvas_src} alt='' />
+				</Link>
+				<p><i className={`${this.props.userFavorites[artwork.id] ? "fa fa-heart favorited" : "fa fa-heart-o"}`} 
+					aria-hidden="true" 
+					onClick={() => this.props.toggleFavorite(artwork.id, this)}></i> 
+					{this.props.artworkFavorites[artwork.id] > 0 ? " " + this.props.artworkFavorites[artwork.id] : ' '}</p>︎	
 			</div>
-			</Link>
+			
 		)
 	}
 
