@@ -75,21 +75,20 @@ class Canvas extends Component {
 		const canvas = document.getElementsByClassName('canvas')[0];
 		const options = {
 			user_id: this.props.user.id,
-			title: this.state.title,
+			title: this.state.title || 'Untitled',
 			painting_src: this.state.painting_src,
 			canvas_src: canvas.toDataURL(),
 		}
 		axios.post('/gallery', options)
 			.then(() => {
-				this.setState({
-					message: `${this.state.title} has been saved to the gallery.`
-				})
-		}).catch(err => {
-			console.log(err);
-			this.setState({
-				redirect: true,
-			});
-		});
+				const message = `${this.state.title || 'Untitled'}  has been saved to the gallery.`;
+				this.props.displayMessage(message);
+				setTimeout(() => {
+					this.setState({
+						redirect: true,
+					});
+				}, 2000);
+		}).catch(err => console.log(err));
 	}
 
 	//renders canvas tools and save/discard buttons
