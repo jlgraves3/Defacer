@@ -15,7 +15,6 @@ class Home extends Component {
  
   //set artwork to be sketched over
   selectArtwork(artwork) {
-    console.log(artwork)
     this.setState({
       currentArtwork: artwork,
       selected: true,
@@ -39,7 +38,8 @@ class Home extends Component {
               resetCanvas={this.resetCanvas}
               discard={this.discard} 
               loggedIn={this.props.loggedIn} 
-              user={this.props.user}/> 
+              user={this.props.user}
+              displayMessage={this.props.displayMessage}/> 
         : <Artists 
               selectArtwork={this.selectArtwork} />}
       </div>
