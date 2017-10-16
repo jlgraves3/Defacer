@@ -22,6 +22,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      artworks: null,
+      artworksLoaded: false,
       user: null,
       loggedIn: false,
       redirect: false,
@@ -31,7 +33,7 @@ class App extends Component {
       //artworkFavorites - {artworkID : 12}
       artworkFavorites: {},
       displayMessage: false,
-      message: '',
+      message: '', 
     }
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -41,6 +43,22 @@ class App extends Component {
     this.handleUserFavorites = this.handleUserFavorites.bind(this);
     this.handleArtworkFavorites = this.handleArtworkFavorites.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
+  }
+
+  componentDidMount() {
+    //fetch gallery data
+    axios.get('/gallery')
+    .then(res => {
+      const artworks = res.data.data;
+      this.setState({
+        artworks: artworks,
+        artworksLoaded: true,
+      });
+      const artworkFavorites = {};
+      //gets number of favorites for each artwork
+      artworks.forEach(artwork => artworkFavorites[artwork.id] = artwork.count);
+      this.handleArtworkFavorites(artworkFavorites);
+    }).catch(err => console.log(err));
   }
 
   //update user favorites globally
@@ -57,32 +75,35 @@ class App extends Component {
     });
   }
 
-  toggleFavorite(id) {
+  toggleFavorite(id, component) {
     if (this.state.loggedIn) {
       var userFavorites = this.state.userFavorites;
       var artworkFavorites = this.state.artworkFavorites;
       // user has favorited -> unfavorite item
       if (this.state.userFavorites[id]) {
-        console.log('favorite', id);
         axios.delete(`/gallery/${id}/favorite`)
         .then(() => {
+           //update user and artwork favoritess
           userFavorites[id] = false;
-          artworkFavorites[id] = artworkFavorites[id] - 1;
+          artworkFavorites[id] = parseInt(artworkFavorites[id]) - 1;
+          this.handleUserFavorites(userFavorites);
+          this.handleArtworkFavorites(artworkFavorites);
+          component.forceUpdate();
         })
         .catch(err => console.log(err));
       // user has not favorited -> favorite item
       } else {
-        console.log('unfavorite', id);
         axios.post(`/gallery/${id}/favorite`)
         .then(() => {
+           //update user and artwork favorites
           userFavorites[id] = true;
-          artworkFavorites[id] = artworkFavorites[id] + 1;
+          artworkFavorites[id] = parseInt(artworkFavorites[id]) + 1;
+          this.handleUserFavorites(userFavorites);
+          this.handleArtworkFavorites(artworkFavorites);
+          component.forceUpdate();
         })
         .catch(err => console.log(err));
       }
-      //update user and artwork favorites
-      this.handleUserFavorites(userFavorites);
-      this.handleArtworkFavorites(artworkFavorites);
     } else {
       this.setState({
         displayMessage: true,
@@ -93,7 +114,7 @@ class App extends Component {
           displayMessage: false,
           message: '',
         });
-      }, 4000);
+      }, 2000);
     }
   }
 
@@ -172,9 +193,10 @@ class App extends Component {
         <Route exact path="/register" render={() => <Register handleRegister={this.handleRegister} />} />
         <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin}/>} />
         <Route exact path="/gallery"  render={() => <Gallery 
+          artworks={this.state.artworks}
+          artworksLoaded={this.state.artworksLoaded}
           loggedIn={this.state.loggedIn} 
           user={this.state.user} 
-          handleUserFavorites={this.handleUserFavorites}
           handleArtworkFavorites={this.handleArtworkFavorites}
           toggleFavorite={this.toggleFavorite}
           userFavorites={this.state.userFavorites} 
@@ -183,12 +205,18 @@ class App extends Component {
           <Artwork {...props} 
           loggedIn={this.state.loggedIn} 
           user={this.state.user}
-          handleDelete={this.handleDelete} /> 
+          handleDelete={this.handleDelete}
+          toggleFavorite={this.toggleFavorite}
+          userFavorites={this.state.userFavorites} 
+          artworkFavorites={this.state.artworkFavorites} /> 
         } />
         <Route exact path="/profile" render={() => <Profile 
           loggedIn={this.state.loggedIn} 
           user={this.state.user} 
-          handleUserFavorites={this.handleUserFavorites} />} />
+          handleUserFavorites={this.handleUserFavorites}
+          toggleFavorite={this.toggleFavorite}
+          userFavorites={this.state.userFavorites} 
+          artworkFavorites={this.state.artworkFavorites}  />} />
         </div>
       </Router>
     );

@@ -13,23 +13,6 @@ class Gallery extends Component {
 		this.renderArtwork = this.renderArtwork.bind(this);
 	}
 
-	componentDidMount() {
-		//fetch artworks from gallery
-		console.log(this.props);
-		axios.get('/gallery')
-		.then(res => {
-			const artworks = res.data.data
-			this.setState({
-				artworks: artworks,
-				artworksLoaded: true,
-			});
-			const artworkFavorites = {};
-			//gets number of favorites for each artwork
-			artworks.forEach(artwork => artworkFavorites[artwork.id] = artwork.count);
-			console.log(artworkFavorites);
-		}).catch(err => console.log(err));
-	}
-
 	//render single artwork div
 	renderArtwork(artwork) {
 		return(
@@ -44,8 +27,8 @@ class Gallery extends Component {
 				</Link>
 				<p><i className={`${this.props.userFavorites[artwork.id] ? "fa fa-heart favorited" : "fa fa-heart-o"}`} 
 					aria-hidden="true" 
-					onClick={() => this.props.toggleFavorite(artwork.id)}></i> 
-					{artwork.count > 0 ? " " + artwork.count : ' '}</p>︎
+					onClick={() => this.props.toggleFavorite(artwork.id, this)}></i> 
+					{this.props.artworkFavorites[artwork.id] > 0 ? " " + this.props.artworkFavorites[artwork.id] : ' '}</p>︎
 			</div>	
 		)
 	}
@@ -55,7 +38,7 @@ class Gallery extends Component {
 			<div>
 				<h1>Gallery</h1>
 				<div className='gallery-container'>
-				{this.state.artworksLoaded ? this.state.artworks.map(this.renderArtwork) :  <Loading />}
+				{this.props.artworksLoaded ? this.props.artworks.map(this.renderArtwork) :  <Loading />}
 				</div>
 			</div>
 		)
