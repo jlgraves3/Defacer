@@ -7,10 +7,16 @@ class Gallery extends Component {
 		super();
 		this.state = {
 			artworks: null,
-			artworksLoaded: false,
+			sortBy: 'recent',
 		}
 		this.renderArtwork = this.renderArtwork.bind(this);
+		//this.sortByRecent = this.sortByRecent.bind(this);
 		this.sortArtworks = this.sortArtworks.bind(this);
+		this.handleSortChange = this.handleSortChange.bind(this);
+	}
+
+	componentDidMount() {
+		console.log(this.props);
 	}
 
 	//render single artwork div
@@ -33,14 +39,36 @@ class Gallery extends Component {
 		)
 	}
 
+	// sorts artworks
 	sortArtworks(artworks) {
-		return artworks.sort((a,b) => b.id - a.id);
+		//this.set
+		if (this.state.sortBy === 'recent') {
+			return artworks.sort((a,b) => b.id - a.id);
+		} else {
+			return artworks.sort((a,b) => b.count - a.count);
+		}	
 	}
 
+	handleSortChange(e) {
+		console.log('handle sort change')
+		this.setState({
+			sortBy : e.target.value,
+		});
+		console.log(this.state.sortBy);
+	}
+
+/*input name='sortBy' value='recent' className={this.state.sortBy==='recent' ? 'underline' : ''}>Recent</p>
+				<p className={this.state.sortBy==='popular' ? 'underline' : ''}>Popular</p>*/
 	render() {
 		return(
 			<div>
 				<h1>Gallery</h1>
+				<span id='sort'>
+					<select name='sortBy' onChange={this.handleSortChange}>
+						<option value='recent'>Recent</option>
+						<option value='popular'>Popular</option>
+					</select>
+				</span>
 				<div className='gallery-container'>
 				{this.props.artworksLoaded ? this.sortArtworks(this.props.artworks).map(this.renderArtwork) :  <Loading />}
 				</div>
