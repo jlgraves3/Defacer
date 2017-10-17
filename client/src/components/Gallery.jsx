@@ -25,23 +25,24 @@ class Gallery extends Component {
 			<div className='gallery-work' key={artwork.id}>
 				<Link to={`/gallery/${artwork.id}`} >
 					<div className='overlay'>
-						<h4>{artwork.title || 'Untitled'}</h4>
-						<h5>{artwork.username}</h5>
 					</div>
 				<img src={artwork.painting_src} alt=''/>
 				<img src={artwork.canvas_src} alt='' />	
 				</Link>
-				<p><i className={`${this.props.userFavorites[artwork.id] ? "fa fa-heart favorited" : "fa fa-heart-o"}`} 
+				<div className='info'>
+					<h4>{artwork.title || 'Untitled'}</h4>
+					<h5>{artwork.username}</h5>
+					<p><i className={`${this.props.userFavorites[artwork.id] ? "fa fa-heart favorited" : "fa fa-heart-o"}`} 
 					aria-hidden="true" 
 					onClick={() => this.props.toggleFavorite(artwork.id, this)}></i> 
 					{this.props.artworkFavorites[artwork.id] > 0 ? " " + this.props.artworkFavorites[artwork.id] : ' '}</p>︎
+				</div>
 			</div>	
 		)
 	}
 
-	// sorts artworks
+	// sorts artworks by sort by filter in state
 	sortArtworks(artworks) {
-		//this.set
 		if (this.state.sortBy === 'recent') {
 			return artworks.sort((a,b) => b.id - a.id);
 		} else {
@@ -49,16 +50,14 @@ class Gallery extends Component {
 		}	
 	}
 
+	// changes state to sort filter - either recent or popular
 	handleSortChange(e) {
-		console.log('handle sort change')
 		this.setState({
 			sortBy : e.target.value,
 		});
 		console.log(this.state.sortBy);
 	}
 
-/*input name='sortBy' value='recent' className={this.state.sortBy==='recent' ? 'underline' : ''}>Recent</p>
-				<p className={this.state.sortBy==='popular' ? 'underline' : ''}>Popular</p>*/
 	render() {
 		return(
 			<div>
@@ -69,9 +68,7 @@ class Gallery extends Component {
 						<option value='popular'>Popular</option>
 					</select>
 				</span>
-				<div className='gallery-container'>
-				{this.props.artworksLoaded ? this.sortArtworks(this.props.artworks).map(this.renderArtwork) :  <Loading />}
-				</div>
+				{this.props.artworksLoaded ? <div className='gallery-container'>{this.sortArtworks(this.props.artworks).map(this.renderArtwork)}</div> :  <Loading />}
 			</div>
 		)
 	}
