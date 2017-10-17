@@ -75,9 +75,8 @@ class Profile extends Component {
 			<div>
 				<h1>{this.props.user.username}</h1>
 				<h2>Your Artworks:</h2>
-				<div className='gallery-container'>
-					{this.state.userArtworksLoaded ? this.renderHelper() :  <Loading />}
-				</div>
+				{this.state.userArtworksLoaded ? 
+					<div className='gallery-container'>{this.renderHelper()}</div> :  <Loading />}
 			</div>
 		)
 	}
