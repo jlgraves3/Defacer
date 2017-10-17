@@ -39,15 +39,17 @@ class Profile extends Component {
 			<div className='gallery-work' key={artwork.id}>
 			<Link to={`/gallery/${artwork.id}`}>
 				<div className='overlay'>
-					<h4>{artwork.title || 'Untitled'}</h4>
 				</div>
 				<img src={artwork.painting_src} alt=''/>
 				<img src={artwork.canvas_src} alt='' />
 				</Link>
+				<div className='info'>
+				<h4>{artwork.title || 'Untitled'}</h4>
 				<p><i className={`${this.props.userFavorites[artwork.id] ? "fa fa-heart favorited" : "fa fa-heart-o"}`} 
 					aria-hidden="true" 
 					onClick={() => this.props.toggleFavorite(artwork.id, this)}></i> 
 					{this.props.artworkFavorites[artwork.id] > 0 ? " " + this.props.artworkFavorites[artwork.id] : ' '}</p>︎	
+				</div>
 			</div>
 		)
 	}
