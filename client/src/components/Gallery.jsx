@@ -46,7 +46,9 @@ class Gallery extends Component {
 		if (this.state.sortBy === 'recent') {
 			return artworks.sort((a,b) => b.id - a.id);
 		} else {
-			return artworks.sort((a,b) => b.count - a.count);
+			const count = this.props.artworkFavorites;
+			//return artworks.sort((a,b) => b.count - a.count);
+			return artworks.sort((a,b) => count[b.id] - count[a.id]); 
 		}	
 	}
 
@@ -62,12 +64,14 @@ class Gallery extends Component {
 		return(
 			<div>
 				<h1>Gallery</h1>
+				<div className='sortContainer'>
 				<span id='sort'>
 					<select name='sortBy' onChange={this.handleSortChange}>
 						<option value='recent'>Recent</option>
 						<option value='popular'>Popular</option>
 					</select>
 				</span>
+				</div>
 				{this.props.artworksLoaded ? <div className='gallery-container'>{this.sortArtworks(this.props.artworks).map(this.renderArtwork)}</div> :  <Loading />}
 			</div>
 		)
