@@ -20,10 +20,16 @@ class Artwork extends Component {
 		//fetch artwork data
 		axios.get(`/gallery/${this.props.match.params.id}`)
 		.then(res => {
-			this.setState({
-				artwork: res.data.data,
-				artworkLoaded: true,
-			});
+			//artwork found
+			if (res.data.data) {
+					this.setState({
+					artwork: res.data.data,
+					artworkLoaded: true,
+				});
+			//artwork not found
+			} else {
+				this.props.handleRedirectPath('/gallery');
+			}
 		}).catch(err => console.log(err));
 	}
 
@@ -40,7 +46,7 @@ class Artwork extends Component {
 			return (
 				<div className='crud-buttons'>
 					<button onClick={() => this.setState(this.toggleEdit)}>Edit</button>
-					<button onClick={() => this.props.handleDelete(this.props.match.params.id)}>Delete</button>
+					<button onClick={() => this.props.handleDelete(this.state.artwork)}>Delete</button>
 				</div>
 			)
 		}
@@ -53,7 +59,10 @@ class Artwork extends Component {
 				return <Edit 
 					toggleEdit={this.toggleEdit} 
 					artwork={artwork} 
-					id={this.props.match.params.id} />
+					id={this.props.match.params.id}
+					handleRedirectPath={this.props.handleRedirectPath}
+					handleUpdateArtwork={this.props.handleUpdateArtwork}
+					handleCreateArtwork={this.props.handleCreateArtwork} />
 			}
 			return (
 				<div className='single'>
