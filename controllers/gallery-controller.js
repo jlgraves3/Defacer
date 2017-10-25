@@ -17,14 +17,23 @@ galleryController.index = (req,res) => {
 galleryController.show = (req,res) => {
 	Gallery.findById(req.params.id)
 	.then(artwork => {
-		Favorite.findByArtwork(req.params.id)
-		.then(users => {
-			artwork.favorites = users;
+		//if artwork exists
+		if (artwork) {
+			Favorite.findByArtwork(req.params.id)
+			.then(users => {
+				artwork.favorites = users;
+				res.json({
+					message: 'ok',
+					data: artwork,
+				});
+			}).catch(err => console.log(err));
+			//artwork does not exist
+		} else {
 			res.json({
-				message: 'ok',
-				data: artwork,
+				message: 'not found',
+				data: null,
 			});
-		}).catch(err => console.log(err));
+		}
 	}).catch(err => console.log(err));
 }
 
@@ -45,7 +54,8 @@ galleryController.create = (req,res) => {
 		title: req.body.title,
 		painting_src: req.body.painting_src,
 		canvas_src: req.body.canvas_src
-	}).then(artwork => {
+	})
+	.then((artwork) => {
 		res.json({
 			message: 'successfully added',
 			data: artwork,
