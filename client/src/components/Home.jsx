@@ -39,7 +39,8 @@ class Home extends Component {
               discard={this.discard} 
               loggedIn={this.props.loggedIn} 
               user={this.props.user}
-              displayMessage={this.props.displayMessage}/> 
+              displayMessage={this.props.displayMessage}
+              handleCreateArtwork={this.props.handleCreateArtwork} /> 
         : <Artists 
               selectArtwork={this.selectArtwork} />}
       </div>
