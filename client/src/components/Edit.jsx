@@ -98,17 +98,15 @@ class Edit extends Component {
 		if (action === 'put') {
 				axios.put(`/gallery/${this.props.id}`,artwork)
 				.then(res => {
-					this.setState({
-						redirect: true,
-					});
+					this.props.handleUpdateArtwork(res.data.data);
+					this.props.handleRedirectPath('/profile');
 				}).catch(err => console.log(err));
 			} 
 		else if (action === 'post') {
 				axios.post('/gallery', artwork)
 				.then(res => {
-					this.setState({
-						redirect: true,
-					});
+					this.props.handleCreateArtwork(res.data.data);
+					this.props.handleRedirectPath('/profile');
 				}).catch(err => {
 					console.log(err);
 					this.setState({

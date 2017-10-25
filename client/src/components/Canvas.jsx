@@ -80,7 +80,9 @@ class Canvas extends Component {
 			canvas_src: canvas.toDataURL(),
 		}
 		axios.post('/gallery', options)
-			.then(() => {
+			.then((res) => {
+				//add to global state
+				this.props.handleCreateArtwork(res.data.data);
 				const message = `${this.state.title || 'Untitled'}  has been saved to the gallery.`;
 				this.props.displayMessage(message);
 				setTimeout(() => {
