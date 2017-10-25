@@ -44,6 +44,9 @@ class App extends Component {
     this.handleArtworkFavorites = this.handleArtworkFavorites.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.displayMessage = this.displayMessage.bind(this);
+    this.handleCreateArtwork = this.handleCreateArtwork.bind(this);
+    this.handleRedirectPath = this.handleRedirectPath.bind(this);
+    this.handleUpdateArtwork = this.handleUpdateArtwork.bind(this);
   }
 
   componentDidMount() {
@@ -76,6 +79,29 @@ class App extends Component {
     });
   }
 
+  handleUpdateArtwork(artwork) {
+    var artworks = this.state.artworks;
+    var index;
+    artworks.forEach((v,i) => {
+      if (v.id === artwork.id) {
+        index = i;
+      }
+    });
+    artworks[index] = artwork;
+    this.setState({
+      artworks: artworks,
+    })
+  }
+
+  //adds new artwork to global state;
+  handleCreateArtwork(artwork) {
+    var artworks = this.state.artworks;
+    artworks.push(artwork);
+    this.setState({
+      artworks: artworks,
+    });
+  }
+
   displayMessage(message) {
      this.setState({
         displayMessage: true,
@@ -91,11 +117,14 @@ class App extends Component {
 
   toggleFavorite(id, component) {
     if (this.state.loggedIn) {
+      const options = {
+        user_id: this.state.user.id,
+      };
       var userFavorites = this.state.userFavorites;
       var artworkFavorites = this.state.artworkFavorites;
       // user has favorited -> unfavorite item
       if (this.state.userFavorites[id]) {
-        axios.delete(`/gallery/${id}/favorite`)
+        axios.delete(`/gallery/${id}/favorite`,options)
         .then(() => {
            //update user and artwork favoritess
           userFavorites[id] = false;
@@ -107,7 +136,7 @@ class App extends Component {
         .catch(err => console.log(err));
       // user has not favorited -> favorite item
       } else {
-        axios.post(`/gallery/${id}/favorite`)
+        axios.post(`/gallery/${id}/favorite`,options)
         .then(() => {
            //update user and artwork favorites
           userFavorites[id] = true;
@@ -174,11 +203,34 @@ class App extends Component {
     }
   }
 
+  //sets state to redirect to given path
+  handleRedirectPath(path) {
+    this.setState({
+      path: path,
+      redirect: true,
+    });
+    this.handleRedirect();
+  }
+
   //delete artwork from gallery
-  handleDelete(id) {
-    axios.delete(`/gallery/${id}`)
+  handleDelete(artwork) {
+    axios.delete(`/gallery/${artwork.id}`)
     .then(() => {
+      var artworks = this.state.artworks;
+      //get index of artwork being deleted
+      var index;
+      artworks.forEach((v,i) => {
+        if (v.id === artwork.id) {
+          index = i;
+        }
+      });
+      //remove deleted artwork from state
+      var first = artworks.slice(0, index);
+      var second = artworks.slice(index+1, artworks.length);
+      var updatedArtworks= first.concat(second);
+      console.log(artwork.id, first, second);
       this.setState({
+        artworks: updatedArtworks,
         redirect: true,
         path: '/gallery',
       })
@@ -195,6 +247,7 @@ class App extends Component {
         <Route exact path="/" render={() => <Home 
           loggedIn={this.state.loggedIn} 
           user={this.state.user}
+          handleCreateArtwork={this.handleCreateArtwork}
           displayMessage={this.displayMessage}/>} />
         <Route exact path="/register" render={() => <Register handleRegister={this.handleRegister} />} />
         <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin}/>} />
@@ -212,6 +265,9 @@ class App extends Component {
           loggedIn={this.state.loggedIn} 
           user={this.state.user}
           handleDelete={this.handleDelete}
+          handleRedirectPath={this.handleRedirectPath}
+          handleCreateArtwork={this.handleCreateArtwork}
+          handleUpdateArtwork={this.handleUpdateArtwork}
           toggleFavorite={this.toggleFavorite}
           userFavorites={this.state.userFavorites} 
           artworkFavorites={this.state.artworkFavorites} /> 
