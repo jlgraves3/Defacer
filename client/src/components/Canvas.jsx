@@ -32,8 +32,8 @@ class Canvas extends Component {
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
 
+	//add selected painting to state
 	componentWillMount() {
-		console.log('will mount');
 		this.setState({
 			painting_src: this.props.artwork._links.image.href.replace("{image_version}","large"),
 		});
@@ -48,6 +48,7 @@ class Canvas extends Component {
 
 	/* used https://stackoverflow.com/questions/39092859/get-dimensions-of-image-with-react
 	 thread answer to help */
+
 	//gets dimensions of painting image so that they can be used for canvas size
 	getDimensions({target:img}) {
 		this.setState({

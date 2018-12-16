@@ -10,13 +10,8 @@ class Gallery extends Component {
 			sortBy: 'recent',
 		}
 		this.renderArtwork = this.renderArtwork.bind(this);
-		//this.sortByRecent = this.sortByRecent.bind(this);
 		this.sortArtworks = this.sortArtworks.bind(this);
 		this.handleSortChange = this.handleSortChange.bind(this);
-	}
-
-	componentDidMount() {
-		console.log(this.props);
 	}
 
 	//render single artwork div
@@ -24,8 +19,7 @@ class Gallery extends Component {
 		return(
 			<div className='gallery-work' key={artwork.id}>
 				<Link to={`/gallery/${artwork.id}`} >
-					<div className='overlay'>
-					</div>
+					<div className='overlay'></div>
 				<img src={artwork.painting_src} alt=''/>
 				<img src={artwork.canvas_src} alt='' />	
 				</Link>
@@ -47,7 +41,6 @@ class Gallery extends Component {
 			return artworks.sort((a,b) => b.id - a.id);
 		} else {
 			const count = this.props.artworkFavorites;
-			//return artworks.sort((a,b) => b.count - a.count);
 			return artworks.sort((a,b) => count[b.id] - count[a.id]); 
 		}	
 	}
@@ -64,7 +57,7 @@ class Gallery extends Component {
 		return(
 			<div>
 				<h1>Gallery</h1>
-				<div className='sortContainer'>
+				<div className='sort-container'>
 				<span id='sort'>
 					<select name='sortBy' onChange={this.handleSortChange}>
 						<option value='recent'>Recent</option>
