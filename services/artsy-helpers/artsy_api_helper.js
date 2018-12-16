@@ -28,11 +28,13 @@ function getArtists(req,res,next) {
 
 function getArtist(req,res,next) {
 	setConfig();
-	axios.get(`https://api.artsy.net/api/artists/${req.params.artist}`, config)
-	.then(jsonRes => {
-		res.locals.data = jsonRes.data
-		next();
-	}).catch(err => console.log(err));
+	setTimeout(function() {
+		axios.get(`https://api.artsy.net/api/artists/${req.params.artist}`, config)
+		.then(jsonRes => {
+			res.locals.data = jsonRes.data
+			next();
+		}).catch(err => console.log(err));
+	}, 100);
 }
 
 function getArtworks(req,res,next) {
