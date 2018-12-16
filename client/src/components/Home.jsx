@@ -3,8 +3,8 @@ import Artists from './Artists';
 import Canvas from './Canvas';
 
 class Home extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       currentArtwork: null,
       selected: false,

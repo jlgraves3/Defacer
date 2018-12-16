@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Loading from './Loading';
+import WorkThumbnail from './Work-Thumbnail';
 
 class Works extends Component {
 	constructor() {
@@ -10,10 +11,23 @@ class Works extends Component {
 			artworksLoaded: false,
 		}
 		this.renderArtwork = this.renderArtwork.bind(this);
+		this.getArtistWorks = this.getArtistWorks.bind(this);
 	}
 
 	componentWillMount() {
-		//fetch selected artist's works and add to state
+		console.log('Works Will Mount');
+	}
+
+	componentDidMount() {
+		console.log('Works Did Mount');
+		this.getArtistWorks();
+	}
+
+	shouldComponentUpdate() {
+		return this.props.artist !== null;
+	}
+
+	getArtistWorks() {
 		axios.get(`/artists/${this.props.artist.path}/works`)
 		.then(res => {
 			this.setState({
@@ -25,12 +39,9 @@ class Works extends Component {
 
 	//render single artwork	
 	renderArtwork(artwork) {
-		return (
-			<div key={artwork.id} className='artwork' onClick={() => this.props.selectArtwork(artwork)}>
-				<img src={artwork._links.image.href.replace("{image_version}","large")} alt='' />
-				<h3>{artwork.title}</h3>
-			</div>
-		);
+		return (<WorkThumbnail key={artwork.id}
+			artwork={artwork}
+			selectArtwork={this.props.selectArtwork} />);
 	}
 
 	render() {
@@ -38,7 +49,7 @@ class Works extends Component {
 			<div>
 				<header>
 					<h1>{this.props.artist.name}</h1>
-					<h1 id='x' onClick={() => this.props.toggleArtist(this.props.artist)}> × </h1> 
+					<h1 id='x' onClick={this.props.deselectArtist}> × </h1> 
 				</header>
 				<div className='container'>
 					{this.state.artworksLoaded ? 

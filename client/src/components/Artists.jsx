@@ -2,24 +2,21 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Works from './Works';
 import Loading from './Loading';
+import ArtistThumbnail from './Artist-Thumbnail';
 
 class Artists extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			artists: [
 				'pablo-picasso',
-				'michelangelo-buonarroti',
 				'leonardo-da-vinci',
-				'vincent-van-gogh',
-				'hieronymus-bosch',
-				'albrecht-durer',
 				'francisco-de-goya',
-				'edgar-degas',
+				'albrecht-durer',
+				'hieronymus-bosch',
 				'claude-monet',
 				'georges-seurat',
 				'johannes-vermeer',
-				'edouard-manet',
 				'sandro-botticelli',
 				'winslow-homer',
 				'paul-cezanne',
@@ -27,89 +24,101 @@ class Artists extends Component {
 				'peter-paul-rubens',
 				'camille-pissarro',
 				'paul-gauguin',
-				'mary-cassatt',
 				'gilbert-stuart',
-				'artemisia-gentileschi',
-				'amedeo-modigliani',
 				'jan-van-eyck',
+				'vincent-van-gogh',
+				'amedeo-modigliani',
+				'artemisia-gentileschi',
+				'edouard-manet',
+				'michelangelo-buonarroti',
+				'gustav-klimt',
+				'mary-cassatt',
 			],
 			artistData: [],
 			artistDataLoaded: false,
 			selectedArtist: null,
 		}
+		this.getArtistData = this.getArtistData.bind(this);
+		this.selectArtist = this.selectArtist.bind(this);
+		this.deselectArtist = this.deselectArtist.bind(this);
+		this.renderSelectedArtistWorks = this.renderSelectedArtistWorks.bind(this);
+		this.renderArtistThumbnails = this.renderArtistThumbnails.bind(this);
 		this.renderArtist = this.renderArtist.bind(this);
-		this.toggleArtist = this.toggleArtist.bind(this);
-		this.renderHelper = this.renderHelper.bind(this);
-		this.introDiv = this.introDiv.bind(this);
 	}
 
-	componentDidMount() {
-		const artistData = [];
-		//get artist data for each artist in array
-		this.state.artists.sort().forEach(artist => {
-			axios.get(`/artists/${artist}`)
-			.then(res => {
-				const data = res.data.data;
-				data.path = artist
-				artistData.push(data);
-				this.setState({
-						artistData: artistData,
-						artistDataLoaded: true,
-				}); 
-			}).catch(err => console.log(err));
+	getArtistData() {
+		let artistData = this.state.artistData;
+		let artists = this.state.artists.sort();
+		let artist = artists.shift();
+		if (artist === undefined) {
+			this.setState({
+				artistDataLoaded: true,
+			});
+			return;
+		}
+		axios.get(`/artists/${artist}`)
+		.then(res => {
+			const data = res.data.data;
+			data.path = artist;
+			artistData.push(data);
+			this.setState({
+				artistData: artistData,
+				artists: artists,
+			}); 
+		}).catch(err => {
+			console.log(err)
+			this.setState({
+				artists: artists,
+			}); 
 		});
 	}
 
-	//deselect/select artist based on current state
-	toggleArtist(artist) {
-		if (this.state.selectedArtist === artist) {
-			this.setState({
-				selectedArtist: null
-			});
-		} else {
-			this.setState({
+	componentWillMount() {
+		console.log('Artists Will Mount');
+	}
+
+	componentDidMount() {
+		console.log('Artists Did Mount');
+	}
+
+	shouldComponentUpdate() {
+		setTimeout(this.getArtistData,500);
+		return true;
+	}
+
+	selectArtist(artist) {
+		this.setState({
 				selectedArtist: artist
-			});
-		}
+		});
 	}
 
-	//render a single artist div
-	renderArtist(artist) {
-		return(
-			<div key={artist.id} className="artist" onClick={() => this.toggleArtist(artist)}>
-				<img className='thumbnail' src={artist._links.thumbnail.href} alt=''/>
-				<h3>{artist.name}</h3>
-			</div>
-		)
+	deselectArtist() {
+		this.setState({
+				selectedArtist: null
+		});
 	}
 
-	//render artists' works if there is a selected artist
-	renderHelper() {
-		if (this.state.selectedArtist) {
-			return 	<Works artist={this.state.selectedArtist} toggleArtist={this.toggleArtist} 
-			selectArtwork={this.props.selectArtwork} /> 
-		} else {
-			//renders all artists thumbnails if no artists has been selected
-			return (
-				<div className='container'>
-				{this.state.artistData.map(this.renderArtist)}
-				</div>
-			)
-		}
+	renderArtist = (artist) => <ArtistThumbnail 
+		artist={artist} key={artist.id} selectArtist={this.selectArtist} 
+		isLoaded={this.state.artistDataLoaded} />
+	
+	renderArtistThumbnails = () => {
+		let artistThumbnails =  <div className="container">{this.state.artistData.map(this.renderArtist)}</div>;
+		let header = <h1 className='intro'>Pick an artist. Deface their work.</h1>
+		return <div>{header}{artistThumbnails}{this.state.artistDataLoaded ? '' : <Loading />}</div>
 	}
 
-	//renders page header
-	introDiv() {
-		return (
-				<h1 className='intro'>Pick an artist. Deface their work.</h1>
-			)
+	renderSelectedArtistWorks() {
+		return <Works 
+			artist={this.state.selectedArtist} 
+			deselectArtist={this.deselectArtist} 
+			selectArtwork={this.props.selectArtwork} />
 	}
 
 	render() {
 		return (
 			<div>
-				{this.state.selectedArtist ? '' : this.introDiv()}
-				{this.state.artistDataLoaded ? this.renderHelper() : <Loading />}
+				{this.state.selectedArtist ? this.renderSelectedArtistWorks() : this.renderArtistThumbnails()}
 			</div>
 		)
 	}
