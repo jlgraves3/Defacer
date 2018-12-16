@@ -128,7 +128,7 @@ class App extends Component {
         .then(() => {
            //update user and artwork favoritess
           userFavorites[id] = false;
-          artworkFavorites[id] = parseInt(artworkFavorites[id]) - 1;
+          artworkFavorites[id] = parseInt(artworkFavorites[id],10) - 1;
           this.handleUserFavorites(userFavorites);
           this.handleArtworkFavorites(artworkFavorites);
           component.forceUpdate();
@@ -140,7 +140,7 @@ class App extends Component {
         .then(() => {
            //update user and artwork favorites
           userFavorites[id] = true;
-          artworkFavorites[id] = parseInt(artworkFavorites[id]) + 1;
+          artworkFavorites[id] = parseInt(artworkFavorites[id],10) + 1;
           this.handleUserFavorites(userFavorites);
           this.handleArtworkFavorites(artworkFavorites);
           component.forceUpdate();

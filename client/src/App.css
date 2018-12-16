@@ -109,6 +109,7 @@ button[type='submit'] {
   margin: 5px 20px;
   flex-wrap: wrap;
 }
+
 .artist {
   width: 20vw;
 }
@@ -121,6 +122,18 @@ button[type='submit'] {
 }
 .artist img, .artwork img {
   width: 100%;
+}
+
+.not-loaded {
+  opacity: 0.4;
+}
+
+.not-loaded:hover {
+  cursor: default;
+}
+
+.not-loaded:hover h3 {
+  text-decoration: none; 
 }
 
 .artwork {
@@ -508,7 +521,7 @@ select {
   right: 15px;
 }
 
-.sortContainer {
+.sort-container {
   width: 100vw;
   height: 25px;
   margin-bottom: 10px;
