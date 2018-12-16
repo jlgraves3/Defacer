@@ -18,7 +18,7 @@ class Home extends Component {
     this.setState({
       currentArtwork: artwork,
       selected: true,
-    })
+    });
   }
 
   //discard current canvas, go back to main page
@@ -42,7 +42,11 @@ class Home extends Component {
               displayMessage={this.props.displayMessage}
               handleCreateArtwork={this.props.handleCreateArtwork} /> 
         : <Artists 
-              selectArtwork={this.selectArtwork} />}
+              selectArtwork={this.selectArtwork}
+              artists={this.props.artists}
+              artistData={this.props.artistData}
+              artistDataLoaded={this.props.artistDataLoaded}
+              handleArtistData={this.props.handleArtistData} />}
       </div>
     );
   }

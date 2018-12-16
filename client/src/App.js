@@ -28,12 +28,38 @@ class App extends Component {
       loggedIn: false,
       redirect: false,
       path: null,
-      //userFavorites - {artworkID : true}
       userFavorites: {},
-      //artworkFavorites - {artworkID : 12}
       artworkFavorites: {},
       displayMessage: false,
-      message: '', 
+      message: '',
+      artists: [
+        'pablo-picasso',
+        'leonardo-da-vinci',
+        'francisco-de-goya',
+        'albrecht-durer',
+        'hieronymus-bosch',
+        'claude-monet',
+        'georges-seurat',
+        'johannes-vermeer',
+        'sandro-botticelli',
+        'winslow-homer',
+        'paul-cezanne',
+        'el-greco',
+        'peter-paul-rubens',
+        'camille-pissarro',
+        'paul-gauguin',
+        'gilbert-stuart',
+        'jan-van-eyck',
+        'vincent-van-gogh',
+        'amedeo-modigliani',
+        'artemisia-gentileschi',
+        'edouard-manet',
+        'michelangelo-buonarroti',
+        'gustav-klimt',
+        'mary-cassatt',
+      ],
+      artistData: [],
+      artistDataLoaded: false
     }
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -42,6 +68,7 @@ class App extends Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleUserFavorites = this.handleUserFavorites.bind(this);
     this.handleArtworkFavorites = this.handleArtworkFavorites.bind(this);
+    this.handleArtistData = this.handleArtistData.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.displayMessage = this.displayMessage.bind(this);
     this.handleCreateArtwork = this.handleCreateArtwork.bind(this);
@@ -63,6 +90,15 @@ class App extends Component {
       artworks.forEach(artwork => artworkFavorites[artwork.id] = artwork.count);
       this.handleArtworkFavorites(artworkFavorites);
     }).catch(err => console.log(err));
+  }
+
+  shouldComponentUpdate() {
+    return true;
+  }
+
+  //avoid reloading artist data
+  handleArtistData(data) {
+    this.setState(data);
   }
 
   //update user favorites globally
@@ -248,6 +284,10 @@ class App extends Component {
           loggedIn={this.state.loggedIn} 
           user={this.state.user}
           handleCreateArtwork={this.handleCreateArtwork}
+          artists={this.state.artists}
+          artistData={this.state.artistData}
+          artistDataLoaded={this.state.artistDataLoaded}
+          handleArtistData={this.handleArtistData}
           displayMessage={this.displayMessage}/>} />
         <Route exact path="/register" render={() => <Register handleRegister={this.handleRegister} />} />
         <Route exact path="/login" render={() => <Login handleLogin={this.handleLogin}/>} />

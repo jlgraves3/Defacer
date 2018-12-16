@@ -14,6 +14,18 @@ class Gallery extends Component {
 		this.handleSortChange = this.handleSortChange.bind(this);
 	}
 
+	componentWillMount() {
+		console.log("Gallery Will Mount")
+	}
+
+	componentDidMount() {
+		console.log("Gallery Did Mount")
+	}
+
+	shouldComponentUpdate() {
+		return true;
+	}
+
 	//render single artwork div
 	renderArtwork(artwork) {
 		return(

@@ -8,34 +8,6 @@ class Artists extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			artists: [
-				'pablo-picasso',
-				'leonardo-da-vinci',
-				'francisco-de-goya',
-				'albrecht-durer',
-				'hieronymus-bosch',
-				'claude-monet',
-				'georges-seurat',
-				'johannes-vermeer',
-				'sandro-botticelli',
-				'winslow-homer',
-				'paul-cezanne',
-				'el-greco',
-				'peter-paul-rubens',
-				'camille-pissarro',
-				'paul-gauguin',
-				'gilbert-stuart',
-				'jan-van-eyck',
-				'vincent-van-gogh',
-				'amedeo-modigliani',
-				'artemisia-gentileschi',
-				'edouard-manet',
-				'michelangelo-buonarroti',
-				'gustav-klimt',
-				'mary-cassatt',
-			],
-			artistData: [],
-			artistDataLoaded: false,
 			selectedArtist: null,
 		}
 		this.getArtistData = this.getArtistData.bind(this);
@@ -47,13 +19,11 @@ class Artists extends Component {
 	}
 
 	getArtistData() {
-		let artistData = this.state.artistData;
-		let artists = this.state.artists.sort();
+		let artists = this.props.artists;
 		let artist = artists.shift();
+		let artistData = this.props.artistData;
 		if (artist === undefined) {
-			this.setState({
-				artistDataLoaded: true,
-			});
+			this.props.handleArtistData({artistDataLoaded: true});
 			return;
 		}
 		axios.get(`/artists/${artist}`)
@@ -61,15 +31,9 @@ class Artists extends Component {
 			const data = res.data.data;
 			data.path = artist;
 			artistData.push(data);
-			this.setState({
-				artistData: artistData,
-				artists: artists,
-			}); 
+			this.props.handleArtistData({artistData: artistData});
 		}).catch(err => {
-			console.log(err)
-			this.setState({
-				artists: artists,
-			}); 
+			this.props.handleArtistData({artists: artists});
 		});
 	}
 
@@ -82,30 +46,30 @@ class Artists extends Component {
 	}
 
 	shouldComponentUpdate() {
-		setTimeout(this.getArtistData,500);
+		setTimeout(this.getArtistData, 500);
 		return true;
 	}
 
 	selectArtist(artist) {
 		this.setState({
-				selectedArtist: artist
+			selectedArtist: artist,
 		});
 	}
 
 	deselectArtist() {
 		this.setState({
-				selectedArtist: null
+			selectedArtist: null
 		});
 	}
 
 	renderArtist = (artist) => <ArtistThumbnail 
 		artist={artist} key={artist.id} selectArtist={this.selectArtist} 
-		isLoaded={this.state.artistDataLoaded} />
+		isLoaded={this.props.artistDataLoaded} />
 	
 	renderArtistThumbnails = () => {
-		let artistThumbnails =  <div className="container">{this.state.artistData.map(this.renderArtist)}</div>;
+		let artistThumbnails =  <div className="container">{this.props.artistData.map(this.renderArtist)}</div>;
 		let header = <h1 className='intro'>Pick an artist. Deface their work.</h1>
-		return <div>{header}{artistThumbnails}{this.state.artistDataLoaded ? '' : <Loading />}</div>
+		return <div>{header}{artistThumbnails}{this.props.artistDataLoaded ? '' : <Loading />}</div>
 	}
 
 	renderSelectedArtistWorks() {
